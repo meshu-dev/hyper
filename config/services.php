@@ -41,6 +41,9 @@ return [
             'token'       => env('NOTION_TOKEN'),
             'version'     => env('NOTION_VERSION', '2022-06-28'),
             'database_id' => env('NOTION_DATABASE_ID')
+        ],
+        'page_to_html' => [
+            'url' => env('NOTION_PAGE_TO_HTML_URL', 'http://localhost:8787')
         ]
     ]
 ];

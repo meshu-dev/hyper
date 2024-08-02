@@ -2,14 +2,20 @@
 
 namespace App\Services;
 
+use Illuminate\Support\Facades\Http;
+use Illuminate\Http\Client\Request;
+
 class NotionPageToHtmlService
 {
-    public function convert(string $pageId)
+    public function convert(string $pageId): string
     {
-        $apiUrl = config('services.notion.api.url');
+        $converterUrl = config('services.notion.page_to_html.url');
 
-        $request = $this->getRequest();
-        $response = $request->post("$apiUrl/databases/$databaseId/query", '{}');
+        $response = Http::withHeaders(['Content-Type' => 'application/json'])
+            ->post(
+                $converterUrl,
+                ['pageId' => $pageId]
+            );
 
         return $response->body();
     }
