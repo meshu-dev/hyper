@@ -9,11 +9,11 @@ Route::get('/user', function (Request $request) {
 
 Route::prefix('blogs')->group(function () {
     Route::prefix('published')->group(function () {
-        Route::get('/', [App\Http\Controllers\BlogController::class, 'getPublished']);
-        Route::get('/tag/{tag}', [App\Http\Controllers\BlogController::class, 'getPublishedByTag']);
-        Route::get('/search/{search}', [App\Http\Controllers\BlogController::class, 'getPublishedBySearch']);
+        Route::get('/', [App\Http\Controllers\BlogController::class, 'getList']);
+        Route::get('/tag/{tag}', [App\Http\Controllers\BlogController::class, 'getByTag']);
+        Route::get('/search/{search}', [App\Http\Controllers\BlogController::class, 'search']);
         Route::get('/slugs', [App\Http\Controllers\BlogController::class, 'getSlugs']);
-        Route::get('/{slug}', [App\Http\Controllers\BlogController::class, 'getPublishedBySlug']);
+        Route::get('/{slug}', [App\Http\Controllers\BlogController::class, 'getBySlug']);
     });
 });
 

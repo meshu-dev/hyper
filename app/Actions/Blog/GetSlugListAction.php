@@ -5,7 +5,7 @@ namespace App\Actions\Blog;
 use App\Enums\StatusEnum;
 use App\Models\Blog;
 
-class GetPublishedSlugListAction
+class GetSlugListAction
 {
     public function execute()
     {

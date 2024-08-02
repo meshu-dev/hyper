@@ -6,7 +6,7 @@ use App\Enums\StatusEnum;
 use App\Http\Resources\BlogResource;
 use App\Models\Blog;
 
-class GetPublishedBySlugAction
+class GetBySlugAction
 {
     public function execute(string $slug)
     {

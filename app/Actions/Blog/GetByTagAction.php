@@ -6,7 +6,7 @@ use App\Enums\StatusEnum;
 use App\Http\Resources\BlogListResource;
 use App\Models\Blog;
 
-class GetPublishedByTagAction
+class GetByTagAction
 {
     public function execute(string $tagName)
     {
