@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Actions\Blog\{
-    GetPublishedListAction,
     GetPublishedBySearchAction,
     GetPublishedBySlugAction,
-    GetPublishedByTagAction
+    GetPublishedByTagAction,
+    GetPublishedListAction,
+    GetPublishedSlugListAction
 };
 
 class BlogController extends Controller
@@ -44,6 +45,15 @@ class BlogController extends Controller
     public function getPublishedBySearch(GetPublishedBySearchAction $getBySearchAction, string $search)
     {
         $rows = $getBySearchAction->execute($search);
+        return response()->json($rows);
+    }
+
+    /**
+     * Get published blog that matches provided search term
+     */
+    public function getSlugs(GetPublishedSlugListAction $getSlugListAction)
+    {
+        $rows = $getSlugListAction->execute();
         return response()->json($rows);
     }
 }
