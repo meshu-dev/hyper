@@ -5,6 +5,7 @@ namespace App\Actions\Blog;
 use App\Enums\StatusEnum;
 use App\Http\Resources\BlogListResource;
 use App\Models\Blog;
+use Illuminate\Support\Carbon;
 
 class GetByTagAction
 {
@@ -15,9 +16,10 @@ class GetByTagAction
             ->select('b.*')
             ->join('blog_tags AS bt', 'bt.blog_id', '=', 'b.id')
             ->join('tags AS t', 't.id', '=', 'bt.tag_id')
+            ->whereDate('published_at', '<=', Carbon::now())
             ->where('status', StatusEnum::DONE->value)
-            ->whereNotNull('published_at')
             ->where('t.name', $tagName)
+            ->orderByDesc('published_at')
             ->get();
 
         return BlogListResource::collection($blogs);
