@@ -32,5 +32,6 @@ class ImportBlogsCommand extends Command
     public function handle()
     {
         $this->importAction->execute();
+        $this->info('Import complete');
     }
 }

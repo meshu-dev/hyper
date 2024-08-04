@@ -59,7 +59,5 @@ class ImportAction
                 }
             }
         }
-
-        dd('$collectionOfPages', $collectionOfPages);
     }
 }
