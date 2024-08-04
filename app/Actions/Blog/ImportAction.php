@@ -4,6 +4,7 @@ namespace App\Actions\Blog;
 
 use App\Services\NotionPageToHtmlService;
 use App\Models\{Blog, Tag};
+use Carbon\Carbon;
 use Notion;
 
 class ImportAction
@@ -35,8 +36,8 @@ class ImportAction
                     'content'        => $html,
                     'status'         => $properties['Status']['status']['name'],
                     'published_at'   => $properties['Published']['date']['start'] ?? null,
-                    'created_at'     => $properties['Created']['created_time'],
-                    'updated_at'     => $properties['Updated']['last_edited_time']
+                    'created_at'     => Carbon::parse($properties['Created']['created_time']),
+                    'updated_at'     => Carbon::parse($properties['Updated']['last_edited_time'])
                 ]);
 
                 if (isset($properties['Tags'])) {
