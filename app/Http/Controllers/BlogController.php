@@ -64,6 +64,6 @@ class BlogController extends Controller
     public function getTotalPages(GetTotalPagesAction $getTotalPagesAction)
     {
         $totalPages = $getTotalPagesAction->execute();
-        return response()->json(['totalPages' => $totalPages]);
+        return response()->json(['total_pages' => $totalPages]);
     }
 }
