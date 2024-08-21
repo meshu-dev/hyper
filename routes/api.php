@@ -13,6 +13,7 @@ Route::prefix('blogs')->group(function () {
         Route::get('/tag/{tag}', [App\Http\Controllers\BlogController::class, 'getByTag']);
         Route::get('/search/{search}', [App\Http\Controllers\BlogController::class, 'search']);
         Route::get('/slugs', [App\Http\Controllers\BlogController::class, 'getSlugs']);
+        Route::get('/total-pages', [App\Http\Controllers\BlogController::class, 'getTotalPages']);
         Route::get('/{slug}', [App\Http\Controllers\BlogController::class, 'getBySlug']);
     });
 });

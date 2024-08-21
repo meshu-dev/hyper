@@ -7,7 +7,8 @@ use App\Actions\Blog\{
     GetByTagAction,
     GetListAction,
     GetSlugListAction,
-    SearchAction
+    SearchAction,
+    GetTotalPagesAction
 };
 
 class BlogController extends Controller
@@ -55,5 +56,14 @@ class BlogController extends Controller
     {
         $rows = $getSlugListAction->execute();
         return response()->json($rows);
+    }
+
+    /**
+     * Get total pages of published blogs
+     */
+    public function getTotalPages(GetTotalPagesAction $getTotalPagesAction)
+    {
+        $totalPages = $getTotalPagesAction->execute();
+        return response()->json(['totalPages' => $totalPages]);
     }
 }
