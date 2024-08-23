@@ -42,8 +42,10 @@ class WpPostRepository
         return WpPost::create([
             'wp_post_id'     => $params['wp_post_id'],
             'wp_category_id' => $params['wp_category_id'],
+            'title'          => $params['title'],
             'slug'           => $params['slug'],
-            'content'        => $params['content']
+            'content'        => $params['content'],
+            'published_at'   => $params['published_at']
         ]);
     }
 
@@ -51,8 +53,10 @@ class WpPostRepository
     {
         $post = WpPost::find($id);
         $post->wp_category_id = $params['wp_category_id'];
+        $post->title          = $params['title'];
         $post->slug           = $params['slug'];
         $post->content        = $params['content'];
+        $post->published_at   = $params['published_at'];
         return $post->save();
     }
 

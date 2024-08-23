@@ -18,8 +18,10 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('wp_post_id');
             $table->unsignedBigInteger('wp_category_id');
+            $table->string('title');
             $table->string('slug');
             $table->text('content');
+            $table->timestamp('published_at')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

@@ -9,7 +9,7 @@ class GetListAction
 {
     public function execute(int $siteId)
     {
-        $itemsPerPage = config('blog.items_per_page');
+        $itemsPerPage = config("sites.$siteId.items_per_page");
         $rows = Tag::withCount('blogs')->where('site_id', $siteId)->get();
 
         $rows = $rows->map(function ($item) use ($itemsPerPage) {

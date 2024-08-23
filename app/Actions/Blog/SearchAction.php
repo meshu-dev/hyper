@@ -16,7 +16,7 @@ class SearchAction
 
     public function execute(int $siteId, string $searchTerm)
     {
-        $itemsPerPage = config('blog.items_per_page');
+        $itemsPerPage = config("sites.$siteId.items_per_page");
 
         $paginator = Blog::with('tags')
             ->where('site_id', $siteId)

@@ -16,7 +16,7 @@ class GetByTagAction
 
     public function execute(int $siteId, string $tagName)
     {
-        $itemsPerPage = config('blog.items_per_page');
+        $itemsPerPage = config("sites.$siteId.items_per_page");
 
         $paginator = Blog::from('blogs AS b')
             ->with('tags')

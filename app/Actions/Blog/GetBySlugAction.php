@@ -2,7 +2,8 @@
 
 namespace App\Actions\Blog;
 
-use App\Enums\StatusEnum;
+use App\Actions\WpPost\GetBySlugAction as GetWpBySlugAction;
+use App\Enums\{SiteEnum, StatusEnum};
 use App\Exceptions\BlogNotFoundException;
 use App\Http\Resources\BlogResource;
 use App\Models\Blog;
@@ -12,6 +13,12 @@ class GetBySlugAction
 {
     public function execute(int $siteId, string $slug)
     {
+        // Get DevPush blog
+        if ($siteId === SiteEnum::DEV_PUSH->value) {
+            return resolve(GetWpBySlugAction::class)->execute($slug);
+        }
+
+        // Get DevNudge blog
         $blog = Blog::with('tags')
             ->where('site_id', $siteId)
             ->where('status', StatusEnum::DONE->value)

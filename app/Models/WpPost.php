@@ -16,8 +16,10 @@ class WpPost extends Model
     protected $fillable = [
         'wp_post_id',
         'wp_category_id',
+        'title',
         'slug',
-        'content'
+        'content',
+        'published_at'
     ];
 
     public function wpPost(): BelongsTo

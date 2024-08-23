@@ -2,7 +2,8 @@
 
 namespace App\Actions\Blog;
 
-use App\Enums\StatusEnum;
+use App\Actions\WpPost\GetListAction as GetWpListAction;
+use App\Enums\{SiteEnum, StatusEnum};
 use App\Http\Resources\BlogListResource;
 use App\Models\Blog;
 use App\Services\ResponseService;
@@ -16,7 +17,13 @@ class GetListAction
 
     public function execute(int $siteId)
     {
-        $itemsPerPage = config('blog.items_per_page');
+        // Get DevPush blogs
+        if ($siteId === SiteEnum::DEV_PUSH->value) {
+            return resolve(GetWpListAction::class)->execute();
+        }
+
+        // Get DevNudge blogs
+        $itemsPerPage = config("sites.$siteId.items_per_page");
 
         $paginator = Blog::with('tags')
             ->where('site_id', $siteId)

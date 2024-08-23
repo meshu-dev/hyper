@@ -19,8 +19,10 @@ class WpPostService
 
         $params = [
             'wp_category_id' => $categoryTaxonomy->term->term_id ?? 0,
+            'title'          => $wpPost->post_title,
             'slug'           => $wpPost->slug,
-            'content'        => $wpPost->post_content
+            'content'        => $wpPost->post_content,
+            'published_at'   => $wpPost->post_date
         ];
 
         $post          = $this->postRepository->getByWpPostId($wpPostId, true);
