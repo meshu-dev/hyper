@@ -39,13 +39,9 @@ return [
 
     'notion' => [
         'api' => [
-            'url'         => env('NOTION_API_URL', 'https://api.notion.com/v1'),
-            'token'       => env('NOTION_TOKEN'),
-            'version'     => env('NOTION_VERSION', '2022-06-28'),
-            'database_id' => [
-                SiteEnum::DEV_PUSH->value  => env('NOTION_DEVPUSH_DATABASE_ID'),
-                SiteEnum::DEV_NUDGE->value => env('NOTION_DEVNUDGE_DATABASE_ID')
-            ]
+            'url'     => env('NOTION_API_URL', 'https://api.notion.com/v1'),
+            'token'   => env('NOTION_TOKEN'),
+            'version' => env('NOTION_VERSION', '2022-06-28')
         ],
         'page_to_html' => [
             'url'   => env('NOTION_PAGE_TO_HTML_URL', 'http://localhost:8787'),

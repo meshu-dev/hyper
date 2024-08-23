@@ -21,8 +21,7 @@ class ImportAction
 
     public function execute(SiteEnum $site)
     {
-        $databaseIds = config('services.notion.api.database_id');
-        $databaseId  = $databaseIds[$site->value];
+        $databaseId = config("sites.$site->value.notion_database_id");
 
         $pageCollection = Notion::database($databaseId)->query();
         $collectionOfPages = $pageCollection->asCollection();
