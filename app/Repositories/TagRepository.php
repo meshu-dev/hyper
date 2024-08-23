@@ -14,6 +14,7 @@ class TagRepository
     public function add(array $params): Tag|null
     {
         return Tag::create([
+            'site_id'       => $params['site_id'],
             'notion_tag_id' => $params['id'],
             'name'          => $params['name'],
             'color'         => $params['color']

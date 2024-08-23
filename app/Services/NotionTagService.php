@@ -12,7 +12,7 @@ class NotionTagService
     ) {
     }
 
-    public function addTags($page): void
+    public function addTags($site, $page): void
     {
         $properties = $page->getRawProperties();
 
@@ -23,6 +23,7 @@ class NotionTagService
                 $tag = $this->tagRepository->getByNotionPageId($propertyTag['id']);
 
                 if (!$tag) {
+                    $propertyTag['site_id'] = $site->value;
                     $this->tagRepository->add($propertyTag);
                 }
             }

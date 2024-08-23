@@ -3,15 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Actions\Subscriber\RegisterAction;
+use App\Http\Requests\SubscriberRegisterRequest;
 
 class SubscriberController extends Controller
 {
     /**
      * Get all tags
      */
-    public function register(SubscriberRegisterRequest $request, RegisterAction $registerAction)
+    public function register(SubscriberRegisterRequest $request, RegisterAction $registerAction, int $siteId)
     {
-        $row = $registerAction->execute();
+        $params = $request->all();
+        $params['site_id'] = $siteId;
+
+        $row = $registerAction->execute($params);
 
         $isSuccess = $row ? true : false;
 

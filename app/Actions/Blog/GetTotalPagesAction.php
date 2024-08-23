@@ -8,12 +8,13 @@ use Illuminate\Support\Carbon;
 
 class GetTotalPagesAction
 {
-    public function execute()
+    public function execute(int $siteId)
     {
         $itemsPerPage = config('blog.items_per_page');
 
-        $totalBlogs = Blog::whereDate('published_at', '<=', Carbon::now())
+        $totalBlogs = Blog::where('site_id', $siteId)
             ->where('status', StatusEnum::DONE->value)
+            ->whereDate('published_at', '<=', Carbon::now())
             ->orderByDesc('published_at')
             ->count();
 

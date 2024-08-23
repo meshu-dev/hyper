@@ -11,8 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
+        Schema::create('sites', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+        });
+
         Schema::create('blogs', function (Blueprint $table) {
             $table->id();
+            $table->integer('site_id')->index();
             $table->string('notion_page_id')->index();
             $table->text('title');
             $table->string('slug');
@@ -21,13 +27,18 @@ return new class extends Migration
             $table->date('published_at')->nullable();
             $table->timestamp('created_at');
             $table->timestamp('updated_at');
+
+            $table->foreign('site_id')->references('id')->on('sites');
         });
 
         Schema::create('tags', function (Blueprint $table) {
             $table->id();
+            $table->integer('site_id')->index();
             $table->string('notion_tag_id')->index();
             $table->string('name');
             $table->string('color');
+
+            $table->foreign('site_id')->references('id')->on('sites');
         });
 
         Schema::create('blog_tags', function (Blueprint $table) {
@@ -45,6 +56,7 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::dropIfExists('sites');
         Schema::dropIfExists('blogs');
         Schema::dropIfExists('tags');
         Schema::dropIfExists('blog_tags');

@@ -9,6 +9,7 @@ class Blog extends Model
     protected $table = 'blogs';
 
     protected $fillable = [
+        'site_id',
         'notion_page_id',
         'title',
         'slug',

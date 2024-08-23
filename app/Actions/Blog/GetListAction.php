@@ -14,13 +14,14 @@ class GetListAction
     {
     }
 
-    public function execute()
+    public function execute(int $siteId)
     {
         $itemsPerPage = config('blog.items_per_page');
 
         $paginator = Blog::with('tags')
-            ->whereDate('published_at', '<=', Carbon::now())
+            ->where('site_id', $siteId)
             ->where('status', StatusEnum::DONE->value)
+            ->whereDate('published_at', '<=', Carbon::now())
             ->orderByDesc('published_at')
             ->paginate($itemsPerPage);
 

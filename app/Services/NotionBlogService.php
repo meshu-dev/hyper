@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Enums\SiteEnum;
 use App\Models\Blog;
 use App\Repositories\BlogRepository;
 use Carbon\Carbon;
@@ -14,12 +15,13 @@ class NotionBlogService
     ) {
     }
 
-    public function add($page): Blog|null
+    public function add(SiteEnum $site, $page): Blog|null
     {
         $html = $this->pageToHtmlService->convert($page->getId());
         $properties = $page->getRawProperties();
 
         return Blog::create([
+            'site_id'        => $site->value,
             'notion_page_id' => $page->getId(),
             'title'          => $page->getTitle(),
             'slug'           => $properties['URL']['url'] ?? null,
@@ -64,5 +66,7 @@ class NotionBlogService
             $page->getId()
         );
         $blogLastUpdated = Carbon::parse($blog->updated_at);
+
+        return $pageLastUpdated->greaterThan($blogLastUpdated);
     }
 }

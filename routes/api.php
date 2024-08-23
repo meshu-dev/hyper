@@ -7,8 +7,8 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-Route::prefix('blogs')->group(function () {
-    Route::prefix('published')->group(function () {
+Route::prefix('sites/{siteId}')->group(function () {
+    Route::prefix('blogs/')->group(function () {
         Route::get('/', [App\Http\Controllers\BlogController::class, 'getList']);
         Route::get('/tag/{tag}', [App\Http\Controllers\BlogController::class, 'getByTag']);
         Route::get('/search/{search}', [App\Http\Controllers\BlogController::class, 'search']);
@@ -16,8 +16,8 @@ Route::prefix('blogs')->group(function () {
         Route::get('/total-pages', [App\Http\Controllers\BlogController::class, 'getTotalPages']);
         Route::get('/{slug}', [App\Http\Controllers\BlogController::class, 'getBySlug']);
     });
-});
 
-Route::prefix('tags')->group(function () {
-    Route::get('/', [App\Http\Controllers\TagController::class, 'getAll']);
+    Route::prefix('tags')->group(function () {
+        Route::get('/', [App\Http\Controllers\TagController::class, 'getAll']);
+    });
 });

@@ -10,11 +10,12 @@ use Illuminate\Support\Carbon;
 
 class GetBySlugAction
 {
-    public function execute(string $slug)
+    public function execute(int $siteId, string $slug)
     {
         $blog = Blog::with('tags')
-            ->whereDate('published_at', '<=', Carbon::now())
+            ->where('site_id', $siteId)
             ->where('status', StatusEnum::DONE->value)
+            ->whereDate('published_at', '<=', Carbon::now())
             ->where('slug', $slug)
             ->first();
 

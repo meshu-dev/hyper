@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Enums\SiteEnum;
+use App\Models\Site;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -13,11 +13,16 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        Site::truncate();
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+        Site::create([
+            'id'   => SiteEnum::DEV_PUSH->value,
+            'name' => 'devpush'
+        ]);
+
+        Site::create([
+            'id'   => SiteEnum::DEV_NUDGE->value,
+            'name' => 'devnudge'
         ]);
     }
 }

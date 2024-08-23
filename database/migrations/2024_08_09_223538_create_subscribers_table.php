@@ -13,9 +13,13 @@ return new class extends Migration
     {
         Schema::create('subscribers', function (Blueprint $table) {
             $table->id();
+            $table->integer('site_id')->index();
             $table->string('name');
             $table->string('email');
+            $table->string('ip');
             $table->timestamps();
+
+            $table->foreign('site_id')->references('id')->on('sites');
         });
     }
 

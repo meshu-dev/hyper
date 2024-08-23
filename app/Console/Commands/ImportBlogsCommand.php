@@ -3,6 +3,8 @@
 namespace App\Console\Commands;
 
 use App\Actions\Blog\ImportAction;
+use App\Enums\SiteEnum;
+use App\Exceptions\SiteIdInvalidException;
 use Illuminate\Console\Command;
 
 class ImportBlogsCommand extends Command
@@ -12,7 +14,7 @@ class ImportBlogsCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'app:import-blogs';
+    protected $signature = 'app:import-blogs {site}';
 
     /**
      * The console command description.
@@ -31,7 +33,13 @@ class ImportBlogsCommand extends Command
      */
     public function handle()
     {
-        $this->importAction->execute();
+        $siteId = $this->argument('site');
+        $site   = SiteEnum::tryFrom($siteId);
+
+        throw_unless($site, SiteIdInvalidException::class, 'Site ID passed is invalid');
+
+        $this->importAction->execute($site);
+
         $this->info('Import complete');
     }
 }

@@ -9,6 +9,7 @@ class Tag extends Model
     protected $table = 'tags';
 
     protected $fillable = [
+        'site_id',
         'notion_tag_id',
         'name',
         'color'

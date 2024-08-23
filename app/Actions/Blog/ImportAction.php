@@ -2,6 +2,7 @@
 
 namespace App\Actions\Blog;
 
+use App\Enums\SiteEnum;
 use App\Repositories\BlogRepository;
 use App\Services\{
     NotionBlogService,
@@ -18,9 +19,10 @@ class ImportAction
     ) {
     }
 
-    public function execute()
+    public function execute(SiteEnum $site)
     {
-        $databaseId = config('services.notion.api.database_id');
+        $databaseIds = config('services.notion.api.database_id');
+        $databaseId  = $databaseIds[$site->value];
 
         $pageCollection = Notion::database($databaseId)->query();
         $collectionOfPages = $pageCollection->asCollection();
@@ -38,10 +40,10 @@ class ImportAction
                     $doBlogTagSync = false;
                 }
             } else {
-                $blog = $this->notionBlogService->add($page);
+                $blog = $this->notionBlogService->add($site, $page);
             }
 
-            $this->notionTagService->addTags($page);
+            $this->notionTagService->addTags($site, $page);
 
             if ($doBlogTagSync) {
                 $this->notionTagService->linkTagsToBlog($page, $blog);

@@ -7,10 +7,10 @@ use App\Models\Tag;
 
 class GetListAction
 {
-    public function execute()
+    public function execute(int $siteId)
     {
         $itemsPerPage = config('blog.items_per_page');
-        $rows = Tag::withCount('blogs')->get();
+        $rows = Tag::withCount('blogs')->where('site_id', $siteId)->get();
 
         $rows = $rows->map(function ($item) use ($itemsPerPage) {
             if ($item->blogs_count <= $itemsPerPage) {

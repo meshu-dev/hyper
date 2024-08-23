@@ -14,13 +14,14 @@ class SearchAction
     {
     }
 
-    public function execute(string $searchTerm)
+    public function execute(int $siteId, string $searchTerm)
     {
         $itemsPerPage = config('blog.items_per_page');
 
         $paginator = Blog::with('tags')
-            ->whereDate('published_at', '<=', Carbon::now())
+            ->where('site_id', $siteId)
             ->where('status', StatusEnum::DONE->value)
+            ->whereDate('published_at', '<=', Carbon::now())
             ->whereLike('title', "%$searchTerm%")
             ->orderByDesc('published_at')
             ->paginate($itemsPerPage);

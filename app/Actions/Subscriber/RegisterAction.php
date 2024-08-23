@@ -9,8 +9,9 @@ class RegisterAction
     public function execute(array $params)
     {
         return Subscriber::create([
-            'name'  => $params['name'],
-            'email' => $params['email']
+            'site_id' => $params['site_id'],
+            'name'    => $params['name'],
+            'email'   => $params['email']
         ]);
     }
 }

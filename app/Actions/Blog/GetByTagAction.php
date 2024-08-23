@@ -14,7 +14,7 @@ class GetByTagAction
     {
     }
 
-    public function execute(string $tagName)
+    public function execute(int $siteId, string $tagName)
     {
         $itemsPerPage = config('blog.items_per_page');
 
@@ -23,8 +23,9 @@ class GetByTagAction
             ->select('b.*')
             ->join('blog_tags AS bt', 'bt.blog_id', '=', 'b.id')
             ->join('tags AS t', 't.id', '=', 'bt.tag_id')
+            ->where('b.site_id', $siteId)
+            ->where('b.status', StatusEnum::DONE->value)
             ->whereDate('published_at', '<=', Carbon::now())
-            ->where('status', StatusEnum::DONE->value)
             ->where('t.name', $tagName)
             ->orderByDesc('published_at')
             ->paginate($itemsPerPage);
