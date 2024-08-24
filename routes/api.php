@@ -14,6 +14,7 @@ Route::prefix('sites/{siteId}')->group(function () {
         Route::get('/search/{search}', [App\Http\Controllers\BlogController::class, 'search']);
         Route::get('/slugs', [App\Http\Controllers\BlogController::class, 'getSlugs']);
         Route::get('/total-pages', [App\Http\Controllers\BlogController::class, 'getTotalPages']);
+        Route::get('/latest', [App\Http\Controllers\BlogController::class, 'getLatest']);
         Route::get('/{slug}', [App\Http\Controllers\BlogController::class, 'getBySlug']);
     });
 

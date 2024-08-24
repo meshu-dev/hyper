@@ -8,7 +8,8 @@ use App\Actions\Blog\{
     GetListAction,
     GetSlugListAction,
     SearchAction,
-    GetTotalPagesAction
+    GetTotalPagesAction,
+    GetLatestAction
 };
 
 class BlogController extends Controller
@@ -65,5 +66,14 @@ class BlogController extends Controller
     {
         $totalPages = $getTotalPagesAction->execute($siteId);
         return response()->json(['total_pages' => $totalPages]);
+    }
+
+    /**
+     * Get total pages of published blogs
+     */
+    public function getLatest(GetLatestAction $getLatestAction, int $siteId)
+    {
+        $rows = $getLatestAction->execute($siteId);
+        return response()->json($rows);
     }
 }
