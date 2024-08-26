@@ -14,14 +14,14 @@ class SubscriberController extends Controller
     {
         $params = $request->all();
         $params['site_id'] = $siteId;
+        $params['ip'] = $request->ip();
 
         $row = $registerAction->execute($params);
 
         $isSuccess = $row ? true : false;
 
         return response()->json([
-            'success' => $isSuccess,
-            'message' => 'Thank you for subscribing'
+            'success' => $isSuccess
         ]);
     }
 }

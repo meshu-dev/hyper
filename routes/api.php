@@ -21,4 +21,8 @@ Route::prefix('sites/{siteId}')->group(function () {
     Route::prefix('tags')->group(function () {
         Route::get('/', [App\Http\Controllers\TagController::class, 'getAll']);
     });
+
+    Route::prefix('subscribers')->group(function () {
+        Route::post('/', [App\Http\Controllers\SubscriberController::class, 'register']);
+    });
 });
