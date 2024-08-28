@@ -19,7 +19,7 @@ return new class extends Migration
         Schema::create('blogs', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('site_id')->index();
-            $table->string('notion_page_id')->index();
+            $table->morphs('blogable');
             $table->text('title');
             $table->string('slug');
             $table->text('content')->nullable();
@@ -49,6 +49,18 @@ return new class extends Migration
             $table->foreign('blog_id')->references('id')->on('blogs');
             $table->foreign('tag_id')->references('id')->on('tags');
         });
+
+        Schema::create('notion_blogs', function (Blueprint $table) {
+            $table->id();
+            $table->string('notion_page_id')->index();
+        });
+
+        Schema::create('wp_posts', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('wp_post_id');
+            $table->unsignedBigInteger('wp_category_id');
+            $table->softDeletes();
+        });
     }
 
     /**
@@ -60,5 +72,7 @@ return new class extends Migration
         Schema::dropIfExists('blogs');
         Schema::dropIfExists('tags');
         Schema::dropIfExists('blog_tags');
+        Schema::dropIfExists('notion_blogs');
+        Schema::dropIfExists('wp_posts');
     }
 };
