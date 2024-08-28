@@ -13,8 +13,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        Site::truncate();
-
         Site::create([
             'id'   => SiteEnum::DEV_PUSH->value,
             'name' => 'devpush'
