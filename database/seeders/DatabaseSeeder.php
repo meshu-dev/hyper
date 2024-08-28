@@ -14,13 +14,13 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         Site::create([
-            'id'   => SiteEnum::DEV_PUSH->value,
-            'name' => 'devpush'
+            'id'   => SiteEnum::DEV_NUDGE->value,
+            'name' => 'devnudge'
         ]);
 
         Site::create([
-            'id'   => SiteEnum::DEV_NUDGE->value,
-            'name' => 'devnudge'
+            'id'   => SiteEnum::DEV_PUSH->value,
+            'name' => 'devpush'
         ]);
     }
 }
