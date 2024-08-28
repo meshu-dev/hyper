@@ -20,7 +20,7 @@ return new class extends Migration
             $table->unsignedBigInteger('wp_category_id');
             $table->string('title');
             $table->string('slug');
-            $table->text('content');
+            $table->longText('content');
             $table->timestamp('published_at')->nullable();
             $table->timestamps();
             $table->softDeletes();
