@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('subscribers', function (Blueprint $table) {
             $table->id();
-            $table->integer('site_id')->index();
+            $table->unsignedBigInteger('site_id')->index();
             $table->string('email');
             $table->string('ip');
             $table->timestamps();

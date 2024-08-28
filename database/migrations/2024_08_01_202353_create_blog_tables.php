@@ -18,7 +18,7 @@ return new class extends Migration
 
         Schema::create('blogs', function (Blueprint $table) {
             $table->id();
-            $table->integer('site_id')->index();
+            $table->unsignedBigInteger('site_id')->index();
             $table->string('notion_page_id')->index();
             $table->text('title');
             $table->string('slug');
@@ -33,7 +33,7 @@ return new class extends Migration
 
         Schema::create('tags', function (Blueprint $table) {
             $table->id();
-            $table->integer('site_id')->index();
+            $table->unsignedBigInteger('site_id')->index();
             $table->string('notion_tag_id')->index();
             $table->string('name');
             $table->string('color');
