@@ -13,12 +13,6 @@ class GetBySlugAction
 {
     public function execute(int $siteId, string $slug)
     {
-        // Get DevPush blog
-        if ($siteId === SiteEnum::DEV_PUSH->value) {
-            return resolve(GetWpBySlugAction::class)->execute($slug);
-        }
-
-        // Get DevNudge blog
         $blog = Blog::with('tags')
             ->where('site_id', $siteId)
             ->where('status', StatusEnum::DONE->value)

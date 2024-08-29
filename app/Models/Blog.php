@@ -11,9 +11,6 @@ class Blog extends Model
 
     protected $fillable = [
         'site_id',
-        'blogable_id',
-        'blogable_type',
-        'notion_page_id',
         'title',
         'slug',
         'content',

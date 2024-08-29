@@ -55,7 +55,7 @@ return new class extends Migration
             $table->string('notion_page_id')->index();
         });
 
-        Schema::create('wp_posts', function (Blueprint $table) {
+        Schema::create('wp_blogs', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('wp_post_id');
             $table->unsignedBigInteger('wp_category_id');
@@ -73,6 +73,6 @@ return new class extends Migration
         Schema::dropIfExists('tags');
         Schema::dropIfExists('blog_tags');
         Schema::dropIfExists('notion_blogs');
-        Schema::dropIfExists('wp_posts');
+        Schema::dropIfExists('wp_blogs');
     }
 };

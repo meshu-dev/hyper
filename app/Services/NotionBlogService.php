@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use App\Enums\SiteEnum;
-use App\Models\Blog;
+use App\Models\{NotionBlog, Blog};
 use App\Repositories\BlogRepository;
 use Carbon\Carbon;
 
@@ -20,17 +20,24 @@ class NotionBlogService
         $html = $this->pageToHtmlService->convert($page->getId());
         $properties = $page->getRawProperties();
 
-        return Blog::create([
-            'site_id'        => $site->value,
-            'notion_page_id' => $page->getId(),
-            'title'          => $page->getTitle(),
-            'slug'           => $properties['URL']['url'] ?? null,
-            'content'        => $html,
-            'status'         => $properties['Status']['status']['name'],
-            'published_at'   => $properties['Published']['date']['start'] ?? null,
-            'created_at'     => Carbon::parse($properties['Created']['created_time']),
-            'updated_at'     => Carbon::parse($properties['Updated']['last_edited_time'])
+        $blog = resolve(Blog::class);
+        $blog->site_id = $site->value;
+        $blog->title = $page->getTitle();
+        $blog->slug = $properties['URL']['url'] ?? null;
+        $blog->content = $html;
+        $blog->status = $properties['Status']['status']['name'];
+        $blog->published_at = $properties['Published']['date']['start'] ?? null;
+        $blog->created_at = Carbon::parse($properties['Created']['created_time']);
+        $blog->updated_at = Carbon::parse($properties['Updated']['last_edited_time']);
+
+        $notionBlog = NotionBlog::create([
+            'notion_page_id' => $page->getId()
         ]);
+
+        $blog->blogable()->associate($notionBlog);
+        $blog->save();
+
+        return $blog;
     }
 
     public function edit($page): bool

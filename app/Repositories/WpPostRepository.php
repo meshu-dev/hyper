@@ -3,7 +3,7 @@
 namespace App\Repositories;
 
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use App\Models\WpPost;
+use App\Models\Blog;
 
 class WpPostRepository
 {
@@ -11,48 +11,58 @@ class WpPostRepository
 
     public function getPaginated(): LengthAwarePaginator
     {
-        return WpPost::latest()->paginate(self::PAGE_LIMIT);
+        return WpBlog::latest()->paginate(self::PAGE_LIMIT);
     }
 
-    public function get(int $id): WpPost
+    public function get(int $id): Blog
     {
-        return WpPost::where('id', $id)->first();
+        return Blog::where('id', $id)->first();
     }
 
-    public function getBySlug(string $slug): WpPost
+    public function getBySlug(string $slug): Blog
     {
-        return WpPost::where('slug', $slug)->first();
+        return Blog::where('slug', $slug)->first();
     }
 
     public function getAllUrls()
     {
-        return WpPost::with(['wpPost' => function ($query) {
+        return Blog::with(['wpPost' => function ($query) {
             $query->select('ID', 'post_name');
         }])->get();
     }
 
-    public function getByWpPostId(int $wpPostId, bool $incDeleted = false): WpPost|null
+    public function getByWpPostId(int $wpPostId, bool $incDeleted = false): Blog|null
     {
-        $model = $incDeleted ? WpPost::withTrashed() : WpPost::select('*');
+        $model = $incDeleted ? Blog::withTrashed() : Blog::select('*');
         return $model->where('wp_post_id', $wpPostId)->first();
     }
 
-    public function add(array $params): WpPost
+    public function add(array $params): Blog
     {
-        return WpPost::create([
+        $blog = resolve(Blog::class);
+        $blog->site_id = $site->value;
+        $blog->title = $params['title'];
+        $blog->slug = $params['slug'] ?? null;
+        $blog->content = $params['content'];
+        $blog->status = 'Done';
+        $blog->published_at = $params['published_at'];
+        //$blog->created_at = Carbon::parse($properties['Created']['created_time']);
+        //$blog->updated_at = Carbon::parse($properties['Updated']['last_edited_time']);
+
+        $wpBlog = WpPost::create([
             'wp_post_id'     => $params['wp_post_id'],
-            'wp_category_id' => $params['wp_category_id'],
-            'title'          => $params['title'],
-            'slug'           => $params['slug'],
-            'content'        => $params['content'],
-            'published_at'   => $params['published_at']
+            'wp_category_id' => $params['wp_category_id']
         ]);
+
+        $blog->blogable()->associate($wpBlog);
+        $blog->save();
+
+        return $blog;
     }
 
     public function edit(int $id, array $params): bool
     {
-        $post = WpPost::find($id);
-        $post->wp_category_id = $params['wp_category_id'];
+        $post = Blog::find($id);
         $post->title          = $params['title'];
         $post->slug           = $params['slug'];
         $post->content        = $params['content'];

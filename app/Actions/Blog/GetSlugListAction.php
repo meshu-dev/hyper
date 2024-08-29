@@ -11,12 +11,6 @@ class GetSlugListAction
 {
     public function execute(int $siteId)
     {
-        // Get DevPush slug list
-        if ($siteId === SiteEnum::DEV_PUSH->value) {
-            return resolve(GetWpSlugListAction::class)->execute();
-        }
-
-        // Get DevNudge slug list
         $blogs = Blog::whereDate('published_at', '<=', Carbon::now())
             ->where('site_id', $siteId)
             ->where('status', StatusEnum::DONE->value)

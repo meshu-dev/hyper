@@ -17,12 +17,6 @@ class GetLatestAction
 
     public function execute(int $siteId)
     {
-        // Get DevPush blogs
-        if ($siteId === SiteEnum::DEV_PUSH->value) {
-            return resolve(GetWpListAction::class)->execute();
-        }
-
-        // Get DevNudge blogs
         $latestTotal = config("sites.$siteId.latest_total");
 
         $rows = Blog::with('tags')

@@ -17,12 +17,6 @@ class GetListAction
 
     public function execute(int $siteId)
     {
-        // Get DevPush blogs
-        if ($siteId === SiteEnum::DEV_PUSH->value) {
-            return resolve(GetWpListAction::class)->execute();
-        }
-
-        // Get DevNudge blogs
         $itemsPerPage = config("sites.$siteId.items_per_page");
 
         $paginator = Blog::with('tags')
