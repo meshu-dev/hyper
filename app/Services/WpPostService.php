@@ -31,11 +31,11 @@ class WpPostService
             'post_modified'  => $wpPost->post_modified
         ];
 
-        $wpPost        = $this->wpBlogRepository->getByWpPostId($wpPostId, true);
-        $isPostDeleted = false; //strpos($wpPost->slug, '__trashed') !== false;
+        $wpBlog        = $this->wpBlogRepository->getByWpPostId($wpPostId, true);
+        $isPostDeleted = strpos($wpPost->slug, '__trashed') !== false;
 
-        if ($wpPost) {
-            $blogId = $wpPost->blog->id;
+        if ($wpBlog) {
+            $blogId = $wpBlog->blog->id;
 
             if ($isPostDeleted) {
                 $this->postRepository->delete($blogId);

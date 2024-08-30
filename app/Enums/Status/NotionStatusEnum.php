@@ -1,11 +1,8 @@
 <?php
 
-namespace App\Enums;
+namespace App\Enums\Status;
 
-/**
- * @deprecated
- */
-enum StatusEnum: string
+enum NotionStatusEnum: string
 {
     case NOT_STARTED = 'Not started';
     case IN_PROGRESS = 'In progress';
