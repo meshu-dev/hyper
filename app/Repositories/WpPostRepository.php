@@ -3,7 +3,9 @@
 namespace App\Repositories;
 
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use App\Models\Blog;
+use App\Enums\SiteEnum;
+use App\Models\{Blog, WpBlog};
+use Carbon\Carbon;
 
 class WpPostRepository
 {
@@ -33,25 +35,24 @@ class WpPostRepository
 
     public function getByWpPostId(int $wpPostId, bool $incDeleted = false): Blog|null
     {
-        $model = $incDeleted ? Blog::withTrashed() : Blog::select('*');
+        $model = Blog::select('*');
         return $model->where('wp_post_id', $wpPostId)->first();
     }
 
     public function add(array $params): Blog
     {
         $blog = resolve(Blog::class);
-        $blog->site_id = $site->value;
+        $blog->site_id = SiteEnum::DEV_PUSH->value;
         $blog->title = $params['title'];
         $blog->slug = $params['slug'] ?? null;
         $blog->content = $params['content'];
         $blog->status = 'Done';
         $blog->published_at = $params['published_at'];
-        //$blog->created_at = Carbon::parse($properties['Created']['created_time']);
-        //$blog->updated_at = Carbon::parse($properties['Updated']['last_edited_time']);
 
-        $wpBlog = WpPost::create([
+        $wpBlog = WpBlog::create([
             'wp_post_id'     => $params['wp_post_id'],
-            'wp_category_id' => $params['wp_category_id']
+            'wp_category_id' => $params['wp_category_id'],
+            'updated_at'     => $params['post_modified']
         ]);
 
         $blog->blogable()->associate($wpBlog);
@@ -72,6 +73,6 @@ class WpPostRepository
 
     public function delete(int $id)
     {
-        return WpPost::destroy($id);
+        return WpBlog::destroy($id);
     }
 }

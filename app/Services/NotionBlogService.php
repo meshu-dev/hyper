@@ -17,8 +17,8 @@ class NotionBlogService
 
     public function add(SiteEnum $site, $page): Blog|null
     {
-        $html = $this->pageToHtmlService->convert($page->getId());
-        $properties = $page->getRawProperties();
+        $html        = $this->pageToHtmlService->convert($page->getId());
+        $properties  = $page->getRawProperties();
 
         $blog = resolve(Blog::class);
         $blog->site_id = $site->value;
@@ -27,11 +27,11 @@ class NotionBlogService
         $blog->content = $html;
         $blog->status = $properties['Status']['status']['name'];
         $blog->published_at = $properties['Published']['date']['start'] ?? null;
-        $blog->created_at = Carbon::parse($properties['Created']['created_time']);
-        $blog->updated_at = Carbon::parse($properties['Updated']['last_edited_time']);
 
         $notionBlog = NotionBlog::create([
-            'notion_page_id' => $page->getId()
+            'notion_page_id' => $page->getId(),
+            'created_at' => Carbon::parse($properties['Created']['created_time']),
+            'updated_at' => Carbon::parse($properties['Updated']['last_edited_time'])
         ]);
 
         $blog->blogable()->associate($notionBlog);

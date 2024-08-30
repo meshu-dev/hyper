@@ -2,12 +2,17 @@
 
 namespace App\Services;
 
-use App\Repositories\{WpPostRepository, WpPostCategoryRepository};
+use App\Repositories\{
+    WpPostRepository,
+    WpBlogRepository,
+    WpPostCategoryRepository
+};
 
 class WpPostService
 {
     public function __construct(
         protected WpPostRepository $postRepository,
+        protected WpBlogRepository $wpBlogRepository,
         protected WpPostCategoryRepository $postCategoryRepository
     ) {
     }
@@ -22,18 +27,21 @@ class WpPostService
             'title'          => $wpPost->post_title,
             'slug'           => $wpPost->slug,
             'content'        => $wpPost->post_content,
-            'published_at'   => $wpPost->post_date
+            'published_at'   => $wpPost->post_date,
+            'post_modified'  => $wpPost->post_modified
         ];
 
-        $post          = $this->postRepository->getByWpPostId($wpPostId, true);
-        $isPostDeleted = strpos($wpPost->slug, '__trashed') !== false;
+        $wpPost        = $this->wpBlogRepository->getByWpPostId($wpPostId, true);
+        $isPostDeleted = false; //strpos($wpPost->slug, '__trashed') !== false;
 
-        if ($post) {
+        if ($wpPost) {
+            $blogId = $wpPost->blog->id;
+
             if ($isPostDeleted) {
-                $this->postRepository->delete($post->id);
+                $this->postRepository->delete($blogId);
             } else {
                 $this->postRepository->edit(
-                    $post->id,
+                    $blogId,
                     $params
                 );
             }
@@ -49,6 +57,7 @@ class WpPostService
 
     public function processPostCategory($wpCategory)
     {
+        /*
         $wpCategoryId = (int) $wpCategory->term_id;
         $postCategory = $this->postCategoryRepository->getByWordpressCategoryId($wpCategoryId);
         $params       = ['name' => $wpCategory->name];
@@ -61,6 +70,6 @@ class WpPostService
         } else {
             $params['wp_category_id'] = $wpCategoryId;
             $this->postCategoryRepository->add($params);
-        }
+        } */
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Actions\Blog;
+namespace App\Actions\Notion;
 
 use App\Enums\SiteEnum;
 use App\Repositories\BlogRepository;

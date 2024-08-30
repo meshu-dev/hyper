@@ -15,12 +15,8 @@ class Blog extends Model
         'slug',
         'content',
         'status',
-        'published_at',
-        'created_at',
-        'updated_at',
+        'published_at'
     ];
-
-    public $timestamps = false;
 
     public function tags()
     {

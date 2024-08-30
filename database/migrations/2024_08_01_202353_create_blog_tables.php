@@ -53,12 +53,15 @@ return new class extends Migration
         Schema::create('notion_blogs', function (Blueprint $table) {
             $table->id();
             $table->string('notion_page_id')->index();
+            $table->timestamp('created_at');
+            $table->timestamp('updated_at');
         });
 
         Schema::create('wp_blogs', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('wp_post_id');
             $table->unsignedBigInteger('wp_category_id');
+            $table->timestamp('updated_at');
             $table->softDeletes();
         });
     }

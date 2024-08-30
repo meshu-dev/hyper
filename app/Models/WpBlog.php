@@ -14,7 +14,8 @@ class WpBlog extends Model
 
     protected $fillable = [
         'wp_post_id',
-        'wp_category_id'
+        'wp_category_id',
+        'updated_at'
     ];
 
     public $timestamps = false;

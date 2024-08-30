@@ -7,6 +7,7 @@ use App\Models\WpPostCategory;
 
 class WpPostCategoryRepository
 {
+    /*
     public function getAll(): Collection
     {
         return WpPostCategory::with('wpCategory')->get();
@@ -30,5 +31,5 @@ class WpPostCategoryRepository
         $postCategory = WpPostCategory::find($id);
         $postCategory->name = $params['name'];
         return $postCategory->save();
-    }
+    } */
 }

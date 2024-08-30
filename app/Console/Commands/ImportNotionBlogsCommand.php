@@ -2,19 +2,19 @@
 
 namespace App\Console\Commands;
 
-use App\Actions\Blog\ImportAction;
+use App\Actions\Notion\ImportAction;
 use App\Enums\SiteEnum;
 use App\Exceptions\SiteIdInvalidException;
 use Illuminate\Console\Command;
 
-class ImportBlogsCommand extends Command
+class ImportNotionBlogsCommand extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'app:import-blogs {site}';
+    protected $signature = 'app:import-notion {site}';
 
     /**
      * The console command description.
