@@ -47,5 +47,17 @@ return [
             'url'   => env('NOTION_PAGE_TO_HTML_URL', 'http://localhost:8787'),
             'token' => env('NOTION_PAGE_TO_HTML_TOKEN')
         ]
-    ]
+    ],
+
+    'google' => [
+        'recaptcha' => [
+            'verify_url' => env('GOOGLE_RECAPTCHA_VERIFY_URL'),
+            'secret_key' => env('GOOGLE_RECAPTCHA_SECRET_KEY'),
+            'error_messages' => [
+                'invalid-input-response' => 'Submitted token is invalid',
+                'browser-error' => 'Could not connect to the veriry site',
+                'default' => 'Verification for token has failed'
+            ]
+        ]
+    ],
 ];
