@@ -20,42 +20,45 @@ class NotionBlogService
         $html        = $this->pageToHtmlService->convert($page->getId());
         $properties  = $page->getRawProperties();
 
-        $blog = resolve(Blog::class);
-        $blog->site_id = $site->value;
-        $blog->title = $page->getTitle();
-        $blog->slug = $properties['URL']['url'] ?? null;
-        $blog->content = $html;
-        $blog->status = $properties['Status']['status']['name'];
-        $blog->published_at = $properties['Published']['date']['start'] ?? null;
+        $slug = $properties['URL']['url'] ?? null;
 
-        $notionBlog = NotionBlog::create([
-            'notion_page_id' => $page->getId(),
-            'created_at' => Carbon::parse($properties['Created']['created_time']),
-            'updated_at' => Carbon::parse($properties['Updated']['last_edited_time'])
-        ]);
+        // Skip blog creation if slug is blank
+        if ($slug) {
+            $blog = resolve(Blog::class);
+            $blog->site_id = $site->value;
+            $blog->title = $page->getTitle();
+            $blog->slug = $slug;
+            $blog->content = $html;
+            $blog->status = $properties['Status']['status']['name'];
+            $blog->published_at = $properties['Published']['date']['start'] ?? null;
 
-        $blog->blogable()->associate($notionBlog);
-        $blog->save();
+            $notionBlog = NotionBlog::create([
+                'notion_page_id' => $page->getId(),
+                'created_at' => Carbon::parse($properties['Created']['created_time']),
+                'updated_at' => Carbon::parse($properties['Updated']['last_edited_time'])
+            ]);
 
-        return $blog;
+            $blog->blogable()->associate($notionBlog);
+            $blog->save();
+
+            return $blog;
+        }
+        return null;
     }
 
-    public function edit($page): bool
+    public function edit($page, Blog $blog): bool
     {
         $html = $this->pageToHtmlService->convert($page->getId());
         $properties = $page->getRawProperties();
 
-        $params = [
-            'title'      => $page->getTitle(),
-            'slug'       => $properties['URL']['url'] ?? null,
-            'content'    => $html,
-            'updated_at' => Carbon::parse($properties['Updated']['last_edited_time'])
-        ];
+        $blog->title = $page->getTitle();
+        $blog->slug = $properties['URL']['url'] ?? null;
+        $blog->content = $html;
+        $blog->status = $properties['Status']['status']['name'];
 
-        $isUpdated = Blog::where('notion_page_id', $page->getId())
-                          ->update($params);
+        //$blog->updated_at = Carbon::parse($properties['Updated']['last_edited_time']);
 
-        return $isUpdated;
+        return $blog->save();
     }
 
     public function hasBlog(string $pageId): bool

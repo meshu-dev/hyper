@@ -42,10 +42,12 @@ class ImportAction
                 $blog = $this->notionBlogService->add($site, $page);
             }
 
-            $this->notionTagService->addTags($site, $page);
+            if ($blog) {
+                $this->notionTagService->addTags($site, $page);
 
-            if ($doBlogTagSync) {
-                $this->notionTagService->linkTagsToBlog($page, $blog);
+                if ($doBlogTagSync) {
+                    $this->notionTagService->linkTagsToBlog($page, $blog);
+                }
             }
         }
     }
