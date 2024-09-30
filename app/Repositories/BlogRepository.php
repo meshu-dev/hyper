@@ -4,7 +4,7 @@ namespace App\Repositories;
 
 use App\Models\Blog;
 use App\Models\NotionBlog;
-use Illuminate\Database\Query\Builder;
+use Illuminate\Database\Eloquent\Builder;
 
 class BlogRepository
 {
