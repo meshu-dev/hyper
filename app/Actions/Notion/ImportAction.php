@@ -34,7 +34,7 @@ class ImportAction
                 $isPageUpdated = $this->notionBlogService->isPageUpdated($page);
 
                 if ($isPageUpdated) {
-                    $this->notionBlogService->edit($page);
+                    $this->notionBlogService->edit($blog, $page);
                 } else {
                     $doBlogTagSync = false;
                 }

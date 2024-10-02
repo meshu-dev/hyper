@@ -6,6 +6,7 @@ use App\Enums\SiteEnum;
 use App\Models\{NotionBlog, Blog};
 use App\Repositories\BlogRepository;
 use Carbon\Carbon;
+use FiveamCode\LaravelNotionApi\Entities\Page;
 
 class NotionBlogService
 {
@@ -15,7 +16,7 @@ class NotionBlogService
     ) {
     }
 
-    public function add(SiteEnum $site, $page): Blog|null
+    public function add(SiteEnum $site, Page $page): Blog|null
     {
         $html        = $this->pageToHtmlService->convert($page->getId());
         $properties  = $page->getRawProperties();
@@ -46,7 +47,7 @@ class NotionBlogService
         return null;
     }
 
-    public function edit($page, Blog $blog): bool
+    public function edit(Blog $blog, Page $page): bool
     {
         $html = $this->pageToHtmlService->convert($page->getId());
         $properties = $page->getRawProperties();
@@ -55,10 +56,13 @@ class NotionBlogService
         $blog->slug = $properties['URL']['url'] ?? null;
         $blog->content = $html;
         $blog->status = $properties['Status']['status']['name'];
+        $isUpdated = $blog->save();
 
-        //$blog->updated_at = Carbon::parse($properties['Updated']['last_edited_time']);
+        $notionBlog = $blog->blogable;
+        $notionBlog->updated_at = Carbon::parse($properties['Updated']['last_edited_time']);
+        $notionBlog->save();
 
-        return $blog->save();
+        return $isUpdated;
     }
 
     public function hasBlog(string $pageId): bool
