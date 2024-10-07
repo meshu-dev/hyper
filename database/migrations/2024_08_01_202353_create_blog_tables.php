@@ -22,7 +22,7 @@ return new class extends Migration
             $table->morphs('blogable');
             $table->text('title');
             $table->string('slug');
-            $table->text('content')->nullable();
+            $table->mediumText('content')->nullable();
             $table->string('status');
             $table->date('published_at')->nullable();
             $table->timestamp('created_at');
