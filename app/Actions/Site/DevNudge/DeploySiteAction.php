@@ -19,6 +19,7 @@ class DeploySiteAction
         $site       = SiteEnum::DEV_NUDGE;
         $databaseId = config('sites.' . $site->value . '.notion_database_id');
 
+        // Import Notion blogs
         $this->notionImportService->import($site, $databaseId);
 
         // Call deploy hook to re-build DevNudge frontend site
