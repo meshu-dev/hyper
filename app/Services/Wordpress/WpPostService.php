@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Wordpress;
 
 use App\Repositories\{
     WpPostRepository,

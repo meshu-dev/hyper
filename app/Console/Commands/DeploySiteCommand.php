@@ -2,28 +2,28 @@
 
 namespace App\Console\Commands;
 
-use App\Actions\Notion\ImportAction;
+use Illuminate\Console\Command;
 use App\Enums\SiteEnum;
 use App\Exceptions\SiteIdInvalidException;
-use Illuminate\Console\Command;
+use App\Factories\DeploySiteActionFactory;
 
-class ImportNotionBlogsCommand extends Command
+class DeploySiteCommand extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'app:import-notion {site}';
+    protected $signature = 'app:deploy-site {site}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Imports blogs from CMS';
+    protected $description = 'Import latest blog updates and deploy site';
 
-    public function __construct(protected ImportAction $importAction)
+    public function __construct(protected DeploySiteActionFactory $deploySiteActionFactory)
     {
         parent::__construct();
     }
@@ -38,8 +38,9 @@ class ImportNotionBlogsCommand extends Command
 
         throw_unless($site, SiteIdInvalidException::class, 'Site ID passed is invalid');
 
-        $this->importAction->execute($site);
+        $action = $this->deploySiteActionFactory->make($site);
+        $action->execute();
 
-        $this->info('Import complete');
+        $this->info('Deployed site');
     }
 }

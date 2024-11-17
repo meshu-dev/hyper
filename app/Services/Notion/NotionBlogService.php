@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Notion;
 
 use App\Enums\SiteEnum;
 use App\Models\{NotionBlog, Blog};
@@ -11,14 +11,14 @@ use FiveamCode\LaravelNotionApi\Entities\Page;
 class NotionBlogService
 {
     public function __construct(
-        protected NotionPageToHtmlService $pageToHtmlService,
+        protected NotionPageService $notionPageService,
         protected BlogRepository $blogRepository
     ) {
     }
 
     public function add(SiteEnum $site, Page $page): Blog|null
     {
-        $html        = $this->pageToHtmlService->convert($page->getId());
+        $html        = $this->notionPageService->convertToHtml($page->getId());
         $properties  = $page->getRawProperties();
 
         $slug = $properties['URL']['url'] ?? null;
@@ -49,7 +49,7 @@ class NotionBlogService
 
     public function edit(Blog $blog, Page $page): bool
     {
-        $html = $this->pageToHtmlService->convert($page->getId());
+        $html = $this->notionPageService->convertToHtml($page->getId());
         $properties = $page->getRawProperties();
 
         $blog->title = $page->getTitle();
@@ -63,6 +63,22 @@ class NotionBlogService
         $notionBlog->save();
 
         return $isUpdated;
+    }
+
+    public function sync(SiteEnum $site, Page $page): Blog
+    {
+        $blog = $this->blogRepository->getByNotionPageId($page->getId());
+
+        if ($blog) {
+            $isPageUpdated = $this->isPageUpdated($page);
+
+            if ($isPageUpdated) {
+                $this->edit($blog, $page);
+            }
+        } else {
+            $blog = $this->add($site, $page);
+        }
+        return $blog;
     }
 
     public function hasBlog(string $pageId): bool

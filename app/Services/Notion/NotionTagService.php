@@ -1,9 +1,11 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Notion;
 
+use App\Enums\SiteEnum;
 use App\Models\Blog;
 use App\Repositories\TagRepository;
+use FiveamCode\LaravelNotionApi\Entities\Page;
 
 class NotionTagService
 {
@@ -12,7 +14,7 @@ class NotionTagService
     ) {
     }
 
-    public function addTags($site, $page): void
+    public function addTags(SiteEnum $site, Page $page): void
     {
         $properties = $page->getRawProperties();
 
@@ -30,7 +32,7 @@ class NotionTagService
         }
     }
 
-    public function linkTagsToBlog($page, Blog $blog): void
+    public function linkTagsToBlog(Page $page, Blog $blog): void
     {
         $properties = $page->getRawProperties();
 
@@ -45,5 +47,11 @@ class NotionTagService
 
             $blog->tags()->sync($tagIds);
         }
+    }
+
+    public function sync(SiteEnum $site, Page $page, Blog $blog)
+    {
+        $this->addTags($site, $page);
+        $this->linkTagsToBlog($page, $blog);
     }
 }

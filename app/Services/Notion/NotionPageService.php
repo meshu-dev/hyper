@@ -1,16 +1,22 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Notion;
 
-use Illuminate\Support\Facades\Http;
 use App\Exceptions\NotionPageConverter\{
     ConversionException,
     UnauthorizedException
 };
+use Illuminate\Support\Facades\Http;
+use Notion;
 
-class NotionPageToHtmlService
+class NotionPageService
 {
-    public function convert(string $pageId): string
+    public function getPages(string $databaseId)
+    {
+        return (Notion::database($databaseId)->query())->asCollection();
+    }
+
+    public function convertToHtml(string $pageId): string
     {
         $converterUrl   = config('services.notion.page_to_html.url');
         $converterToken = config('services.notion.page_to_html.token');
