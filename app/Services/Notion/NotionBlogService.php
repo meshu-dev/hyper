@@ -25,12 +25,12 @@ class NotionBlogService
 
         // Skip blog creation if slug is blank
         if ($slug) {
-            $blog = resolve(Blog::class);
-            $blog->site_id = $site->value;
-            $blog->title = $page->getTitle();
-            $blog->slug = $slug;
-            $blog->content = $html;
-            $blog->status = $properties['Status']['status']['name'];
+            $blog               = resolve(Blog::class);
+            $blog->site_id      = $site->value;
+            $blog->title        = $page->getTitle();
+            $blog->slug         = $slug;
+            $blog->content      = $html;
+            $blog->status       = $properties['Status']['status']['name'];
             $blog->published_at = $properties['Published']['date']['start'] ?? null;
 
             $notionBlog = NotionBlog::create([
@@ -52,10 +52,12 @@ class NotionBlogService
         $html = $this->notionPageService->convertToHtml($page->getId());
         $properties = $page->getRawProperties();
 
-        $blog->title = $page->getTitle();
-        $blog->slug = $properties['URL']['url'] ?? null;
-        $blog->content = $html;
-        $blog->status = $properties['Status']['status']['name'];
+        $blog->title        = $page->getTitle();
+        $blog->slug         = $properties['URL']['url'] ?? null;
+        $blog->content      = $html;
+        $blog->status       = $properties['Status']['status']['name'];
+        $blog->published_at = $properties['Published']['date']['start'] ?? null;
+
         $isUpdated = $blog->save();
 
         $notionBlog = $blog->blogable;
