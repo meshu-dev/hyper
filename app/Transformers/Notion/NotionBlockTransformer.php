@@ -1,0 +1,22 @@
+<?php
+
+namespace App\Transformers\Notion;
+
+use FiveamCode\LaravelNotionApi\Entities\Blocks\Block;
+
+class NotionBlockTransformer
+{
+    public function __construct(protected Block $block)
+    {
+    }
+
+    public function transform(): string
+    {
+        if ($this->block->getType() === 'table_of_contents') {
+            return '';
+        }
+        dd('Block', $this->block, $this->block->getType());
+        $value = $this->block->getContent()->getPlainText();
+        return "<p>$value</p>";
+    }
+}
