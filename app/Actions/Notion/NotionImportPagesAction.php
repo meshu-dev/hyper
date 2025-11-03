@@ -3,7 +3,6 @@
 namespace App\Actions\Notion;
 
 use App\Actions\Blog\SyncBlogTagsAction;
-use App\Enums\SiteEnum;
 use App\Models\Blog;
 use FiveamCode\LaravelNotionApi\Notion;
 use FiveamCode\LaravelNotionApi\Entities\Page;

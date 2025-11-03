@@ -24,8 +24,6 @@ class NotionGetPageAction
 
     public function execute(Page $page): array
     {
-        dump('title', $page->getTitle());
-
         $pageContent = $this->getPageContentAction->execute($page);
         $properties  = $page->getRawProperties();
 
