@@ -36,7 +36,7 @@ class ImportBlogs extends Command
         }
 
         $databaseId = config('services.notion.devnudge.database_id');
-        $siteId     = SiteEnum::DEVPUSH->value;
+        $siteId     = SiteEnum::DEVNUDGE->value;
 
         resolve(NotionImportPagesAction::class)->execute($databaseId, $siteId);
     }

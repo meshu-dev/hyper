@@ -11,7 +11,6 @@ use App\Actions\Blog\{
     GetTotalPagesAction,
     GetLatestAction
 };
-use App\Enums\SiteEnum;
 use Illuminate\Http\Request;
 
 class BlogController extends Controller
@@ -28,27 +27,33 @@ class BlogController extends Controller
     /**
      * Get published blog that matches provided slug
      */
-    public function getBySlug(Request $request, GetBySlugAction $getBySlugAction, string $slug)
+    public function getBySlug(Request $request, GetBySlugAction $getBySlugAction)
     {
-        $row = $getBySlugAction->execute($request->siteId, $slug);
+        $slug = $request->route('slug');
+        $row  = $getBySlugAction->execute($request->siteId, $slug);
+        
         return response()->json($row);
     }
 
     /**
      * Get published blogs that are associated with provided tag
      */
-    public function getByTag(Request $request, GetByTagAction $getByTagAction, string $tagName)
+    public function getByTag(Request $request, GetByTagAction $getByTagAction)
     {
-        $rows = $getByTagAction->execute($request->siteId, $tagName);
+        $tag  = $request->route('tag');
+        $rows = $getByTagAction->execute($request->siteId, $tag);
+
         return response()->json($rows);
     }
 
     /**
      * Get published blog that matches provided search term
      */
-    public function search(Request $request, SearchAction $getBySearchAction, string $search)
+    public function search(Request $request, SearchAction $getBySearchAction)
     {
-        $rows = $getBySearchAction->execute($request->siteId, $search);
+        $search = $request->route('search');
+        $rows   = $getBySearchAction->execute($request->siteId, $search);
+
         return response()->json($rows);
     }
 
