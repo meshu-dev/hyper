@@ -12,7 +12,8 @@ use Illuminate\Queue\SerializesModels;
 
 class FreeGuides extends Mailable
 {
-    use Queueable, SerializesModels;
+    use Queueable;
+    use SerializesModels;
 
     /**
      * Create a new message instance.
@@ -53,7 +54,7 @@ class FreeGuides extends Mailable
     public function attachments(): array
     {
         $attachments = [];
-        $freeGuides  = FreeGuide::all();
+        $freeGuides = FreeGuide::all();
 
         foreach ($freeGuides as $freeGuide) {
             $attachments[] = Attachment::fromStorageDisk('local', "guides/$freeGuide->filename")

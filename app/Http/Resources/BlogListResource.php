@@ -15,12 +15,12 @@ class BlogListResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'title'        => $this->title,
-            'slug'         => $this->slug,
-            'tags'         => $this->tags ? $this->tags->pluck('name')->toArray() : [],
+            'title' => $this->title,
+            'slug' => $this->slug,
+            'tags' => $this->tags ? $this->tags->pluck('name')->toArray() : [],
             'published_at' => $this->published_at,
-            'created_at'   => $this->created_at,
-            'updated_at'   => $this->updated_at,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
         ];
     }
 }

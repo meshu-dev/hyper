@@ -11,7 +11,7 @@ class SendFreeGuidesAction
     public function execute()
     {
         $sendCount = 0;
-        
+
         $subscribers = Subscriber::where('sent', 0)->get();
 
         foreach ($subscribers as $subscriber) {

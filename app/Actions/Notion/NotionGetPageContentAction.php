@@ -3,8 +3,8 @@
 namespace App\Actions\Notion;
 
 use App\Factories\NotionBlockFactory;
-use FiveamCode\LaravelNotionApi\Notion;
 use FiveamCode\LaravelNotionApi\Entities\Page;
+use FiveamCode\LaravelNotionApi\Notion;
 
 class NotionGetPageContentAction
 {
@@ -17,7 +17,7 @@ class NotionGetPageContentAction
     public function execute(Page $page)
     {
         $pageBlocks = $this->getPageBlocksAction->execute($page);
-        $content    = '';
+        $content = '';
 
         foreach ($pageBlocks as $pageBlock) {
             $content .= resolve(NotionBlockFactory::class)->make($pageBlock)->transform();

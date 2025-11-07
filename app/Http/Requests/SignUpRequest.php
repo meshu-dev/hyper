@@ -16,7 +16,7 @@ class SignUpRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'  => 'required|alpha:ascii',
+            'name' => 'required|alpha:ascii',
             'email' => 'required|email|unique:subscribers,email',
         ];
     }
@@ -31,12 +31,12 @@ class SignUpRequest extends FormRequest
                 Log::info(
                     'Newsletter request',
                     [
-                        'name'  => $this->name,
+                        'name' => $this->name,
                         'email' => $this->email,
-                        'ip'    => $this->ip(),
+                        'ip' => $this->ip(),
                     ]
                 );
-            }
+            },
         ];
     }
 }

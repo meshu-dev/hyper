@@ -13,6 +13,7 @@ class NotionQuoteTransformer
     public function transform(): string
     {
         $quote = $this->block->getContent()->getPlainText();
+
         return "<blockquote>$quote</blockquote>";
     }
 }

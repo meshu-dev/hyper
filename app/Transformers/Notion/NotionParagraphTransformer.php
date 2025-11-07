@@ -13,6 +13,7 @@ class NotionParagraphTransformer
     public function transform(): string
     {
         $paragraph = $this->block->getContent()->getPlainText();
+
         return "<p>$paragraph</p>";
     }
 }

@@ -12,7 +12,7 @@ class Tag extends Model
         'site_id',
         'notion_tag_id',
         'name',
-        'color'
+        'color',
     ];
 
     public $timestamps = false;

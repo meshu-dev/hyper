@@ -13,6 +13,7 @@ class NotionEmbedTransformer
     public function transform(): string
     {
         $url = $this->block->getContent();
+
         return "<embed src='$url' />";
     }
 }

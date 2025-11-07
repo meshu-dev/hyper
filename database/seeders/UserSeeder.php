@@ -11,14 +11,14 @@ class UserSeeder extends Seeder
 {
     public function run(): void
     {
-        if (!User::count()) {
+        if (! User::count()) {
             $data = Storage::json('user.json');
 
             User::create([
-                'name'              => $data['name'],
-                'email'             => $data['email'],
+                'name' => $data['name'],
+                'email' => $data['email'],
                 'email_verified_at' => now(),
-                'password'          => Hash::make($data['password']),
+                'password' => Hash::make($data['password']),
             ]);
         }
     }

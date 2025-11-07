@@ -12,6 +12,7 @@ class LoginAction
     {
         if (Auth::attempt(['email' => $email, 'password' => $password])) {
             $token = Auth::user()->createToken(self::TOKEN_KEY);
+
             return $token->plainTextToken;
         }
     }

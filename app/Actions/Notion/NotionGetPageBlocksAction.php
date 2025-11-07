@@ -2,16 +2,12 @@
 
 namespace App\Actions\Notion;
 
-use App\Collections\{
-    BulletItemCollection,
-    NumberedItemCollection,
-};
-use FiveamCode\LaravelNotionApi\Entities\Blocks\{
-    BulletedListItem,
-    NumberedListItem,
-};
-use FiveamCode\LaravelNotionApi\Notion;
+use App\Collections\BulletItemCollection;
+use App\Collections\NumberedItemCollection;
+use FiveamCode\LaravelNotionApi\Entities\Blocks\BulletedListItem;
+use FiveamCode\LaravelNotionApi\Entities\Blocks\NumberedListItem;
 use FiveamCode\LaravelNotionApi\Entities\Page;
+use FiveamCode\LaravelNotionApi\Notion;
 use Illuminate\Support\Collection;
 
 class NotionGetPageBlocksAction
@@ -29,17 +25,17 @@ class NotionGetPageBlocksAction
     public function execute(Page $page)
     {
         $pageBlocks = $this->notion
-                           ->block($page->getId())
-                           ->children()
-                           ->asCollection();
+            ->block($page->getId())
+            ->children()
+            ->asCollection();
 
         $pageBlocksLength = count($pageBlocks);
-        $pageItems        = [];
+        $pageItems = [];
 
         for ($i = 0; $i < $pageBlocksLength; $i++) {
             $block = $pageBlocks[$i] ?? null;
 
-            if (!$block) {
+            if (! $block) {
                 break;
             }
 

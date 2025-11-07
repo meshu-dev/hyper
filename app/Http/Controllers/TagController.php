@@ -13,6 +13,7 @@ class TagController extends Controller
     public function getAll(Request $request, GetListAction $getListAction)
     {
         $rows = $getListAction->execute($request->siteId);
+
         return response()->json($rows);
     }
 }

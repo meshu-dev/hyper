@@ -14,10 +14,10 @@ class SignUpAction
         string $ip,
     ) {
         Subscriber::create([
-            'name'  => $name,
+            'name' => $name,
             'email' => $email,
-            'ip'    => $ip,
-            'sent'  => false,
+            'ip' => $ip,
+            'sent' => false,
         ]);
 
         $notifyEmail = config('mail.from.notify.address');

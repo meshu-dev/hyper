@@ -3,11 +3,9 @@
 namespace App\Actions\YouTube;
 
 use App\Models\YouTubeVideo;
-use Google\{
-    Service\YouTube,
-    Service\YouTube\SearchResult,
-    Client
-};
+use Google\Client;
+use Google\Service\YouTube;
+use Google\Service\YouTube\SearchResult;
 use Illuminate\Support\Carbon;
 
 class ImportVideosAction
@@ -46,33 +44,33 @@ class ImportVideosAction
     protected function searchYouTube(Carbon $publishedBefore): array
     {
         return $this->youTubeService
-                    ->search
-                    ->listSearch(
-                        ['id', 'snippet'],
-                        [
-                            'channelId'       => config('services.youtube.channel_id'),
-                            'maxResults'      => 50,
-                            'order'           => 'date',
-                            'publishedBefore' => $publishedBefore->format('Y-m-d\TH:i:s.u\Z'),
-                        ]
-                    )->getItems();
+            ->search
+            ->listSearch(
+                ['id', 'snippet'],
+                [
+                    'channelId' => config('services.youtube.channel_id'),
+                    'maxResults' => 50,
+                    'order' => 'date',
+                    'publishedBefore' => $publishedBefore->format('Y-m-d\TH:i:s.u\Z'),
+                ]
+            )->getItems();
     }
 
     protected function addVideo(SearchResult $searchResult): void
     {
         $searchSnippet = $searchResult->getSnippet();
-        $videoId       = $searchResult->getId()->getVideoId();
-        $thumbnailUrl  = $searchSnippet->getThumbnails()->getMedium();
+        $videoId = $searchResult->getId()->getVideoId();
+        $thumbnailUrl = $searchSnippet->getThumbnails()->getMedium();
 
         if ($videoId) {
             $video = YouTubeVideo::where(['youtube_id' => $videoId])->first();
 
-            if (!$video) {
+            if (! $video) {
                 YouTubeVideo::create([
-                    'youtube_id'    => $videoId,
-                    'title'         => $searchSnippet->getTitle(),
+                    'youtube_id' => $videoId,
+                    'title' => $searchSnippet->getTitle(),
                     'thumbnail_url' => $thumbnailUrl->getUrl(),
-                    'published_at'  => Carbon::parse($searchSnippet->getPublishedAt()),
+                    'published_at' => Carbon::parse($searchSnippet->getPublishedAt()),
                 ]);
             }
         }

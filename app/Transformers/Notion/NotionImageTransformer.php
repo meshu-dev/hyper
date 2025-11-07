@@ -13,6 +13,7 @@ class NotionImageTransformer
     public function transform(): string
     {
         $imageUrl = $this->block->getContent();
+
         return "<img src='$imageUrl' />";
     }
 }

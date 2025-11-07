@@ -14,16 +14,16 @@ class SubscriberSeeder extends Seeder
             array_merge($this->getFields(), ['sent' => 1, 'deleted_at' => null]),
             array_merge($this->getFields(), ['sent' => 1, 'deleted_at' => null]),
             array_merge($this->getFields(), ['sent' => 0, 'deleted_at' => null]),
-            array_merge($this->getFields(), ['sent' => 0, 'deleted_at' => Carbon::now()])
+            array_merge($this->getFields(), ['sent' => 0, 'deleted_at' => Carbon::now()]),
         ]);
     }
 
     protected function getFields()
     {
         return [
-            'name'       => fake()->name(),
-            'email'      => fake()->email(),
-            'ip'         => fake()->localIpv4(),
+            'name' => fake()->name(),
+            'email' => fake()->email(),
+            'ip' => fake()->localIpv4(),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ];

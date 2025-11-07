@@ -9,6 +9,7 @@ class DeployWebhookAction
     public function execute(string $hookUrl): bool
     {
         $response = Http::post($hookUrl);
+
         return $response->successful();
     }
 }

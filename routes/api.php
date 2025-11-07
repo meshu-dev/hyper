@@ -1,11 +1,9 @@
 <?php
 
-use App\Http\Controllers\{
-    AuthController,
-    BlogController,
-    NewsletterController,
-    TagController,
-};
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BlogController;
+use App\Http\Controllers\NewsletterController;
+use App\Http\Controllers\TagController;
 use App\Http\Middleware\GetSiteId;
 use Illuminate\Support\Facades\Route;
 

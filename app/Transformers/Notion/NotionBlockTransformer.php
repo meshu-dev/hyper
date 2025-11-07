@@ -17,6 +17,7 @@ class NotionBlockTransformer
         }
         dd('Block', $this->block, $this->block->getType());
         $value = $this->block->getContent()->getPlainText();
+
         return "<p>$value</p>";
     }
 }

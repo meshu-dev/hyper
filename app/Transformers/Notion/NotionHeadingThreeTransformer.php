@@ -13,6 +13,7 @@ class NotionHeadingThreeTransformer
     public function transform(): string
     {
         $heading = $this->block->getContent()->getPlainText();
+
         return "<h3>$heading</h3>";
     }
 }

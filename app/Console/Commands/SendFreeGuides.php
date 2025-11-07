@@ -28,6 +28,6 @@ class SendFreeGuides extends Command
     {
         $result = resolve(SendFreeGuidesAction::class)->execute();
 
-        $this->info('Free guides sent | Sent: ' . $result);
+        $this->info('Free guides sent | Sent: '.$result);
     }
 }

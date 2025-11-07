@@ -26,9 +26,9 @@ class SearchAction
             'data' => $rows,
             'meta' => [
                 'current_page' => $paginator->currentPage(),
-                'last_page'    => $paginator->lastPage(),
-                'total'        => $paginator->total()
-            ]
+                'last_page' => $paginator->lastPage(),
+                'total' => $paginator->total(),
+            ],
         ];
     }
 }

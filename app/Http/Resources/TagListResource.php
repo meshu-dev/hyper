@@ -15,7 +15,7 @@ class TagListResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'name'        => $this->name,
+            'name' => $this->name,
             'total_blogs' => $this->blogs_count,
             'total_pages' => $this->total_pages,
         ];

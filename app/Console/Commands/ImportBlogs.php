@@ -6,7 +6,6 @@ use App\Actions\Blog\ResetAction;
 use App\Actions\Notion\NotionImportPagesAction;
 use App\Enums\SiteEnum;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\App;
 
 class ImportBlogs extends Command
 {
@@ -36,7 +35,7 @@ class ImportBlogs extends Command
         }
 
         $databaseId = config('services.notion.devnudge.database_id');
-        $siteId     = SiteEnum::DEVNUDGE->value;
+        $siteId = SiteEnum::DEVNUDGE->value;
 
         resolve(NotionImportPagesAction::class)->execute($databaseId, $siteId);
     }

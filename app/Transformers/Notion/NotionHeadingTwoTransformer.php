@@ -13,6 +13,7 @@ class NotionHeadingTwoTransformer
     public function transform(): string
     {
         $heading = $this->block->getContent()->getPlainText();
+
         return "<h2>$heading</h2>";
     }
 }

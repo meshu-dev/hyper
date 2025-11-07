@@ -15,9 +15,9 @@ class NotionNumberedListTransformer
         $content = '<ol>';
 
         foreach ($this->collection as $block) {
-            $content .= '<li>' . $block->getRawContent()['text'][0]['plain_text'] . '</li>';
+            $content .= '<li>'.$block->getRawContent()['text'][0]['plain_text'].'</li>';
         }
 
-        return $content . '</ol>';
+        return $content.'</ol>';
     }
 }

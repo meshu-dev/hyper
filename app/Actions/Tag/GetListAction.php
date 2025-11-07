@@ -18,6 +18,7 @@ class GetListAction
             } else {
                 $item->total_pages = ceil($item->blogs_count / $itemsPerPage);
             }
+
             return $item;
         });
 
