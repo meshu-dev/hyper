@@ -11,8 +11,8 @@ class SignUpAction
     public function execute(
         string $name,
         string $email,
-        string $ip,
-    ) {
+        string|null $ip,
+    ): void {
         Subscriber::create([
             'name' => $name,
             'email' => $email,

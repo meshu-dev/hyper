@@ -2,32 +2,38 @@
 
 namespace App\Factories;
 
-use App\Collections\BulletItemCollection;
-use App\Collections\NumberedItemCollection;
-use App\Transformers\Notion\NotionBlockTransformer;
-use App\Transformers\Notion\NotionBulletPointListTransformer;
-use App\Transformers\Notion\NotionCodeTransformer;
-use App\Transformers\Notion\NotionEmbedTransformer;
-use App\Transformers\Notion\NotionHeadingOneTransformer;
-use App\Transformers\Notion\NotionHeadingThreeTransformer;
-use App\Transformers\Notion\NotionHeadingTwoTransformer;
-use App\Transformers\Notion\NotionImageTransformer;
-use App\Transformers\Notion\NotionNumberedListTransformer;
-use App\Transformers\Notion\NotionParagraphTransformer;
-use App\Transformers\Notion\NotionQuoteTransformer;
-use App\Transformers\Notion\NotionVideoTransformer;
-use FiveamCode\LaravelNotionApi\Entities\Blocks\Block;
-use FiveamCode\LaravelNotionApi\Entities\Blocks\Embed;
-use FiveamCode\LaravelNotionApi\Entities\Blocks\HeadingOne;
-use FiveamCode\LaravelNotionApi\Entities\Blocks\HeadingThree;
-use FiveamCode\LaravelNotionApi\Entities\Blocks\HeadingTwo;
-use FiveamCode\LaravelNotionApi\Entities\Blocks\Image;
-use FiveamCode\LaravelNotionApi\Entities\Blocks\Paragraph;
-use FiveamCode\LaravelNotionApi\Entities\Blocks\Video;
+use App\Collections\{
+    BulletItemCollection,
+    NumberedItemCollection,
+};
+use App\Transformers\Notion\{
+    NotionBlockTransformer,
+    NotionBulletPointListTransformer,
+    NotionCodeTransformer,
+    NotionEmbedTransformer,
+    NotionHeadingOneTransformer,
+    NotionHeadingTwoTransformer,
+    NotionHeadingThreeTransformer,
+    NotionImageTransformer,
+    NotionNumberedListTransformer,
+    NotionParagraphTransformer,
+    NotionQuoteTransformer,
+    NotionVideoTransformer,
+};
+use FiveamCode\LaravelNotionApi\Entities\Blocks\{
+    Block,
+    Embed,
+    HeadingOne,
+    HeadingTwo,
+    HeadingThree,
+    Image,
+    Paragraph,
+    Video,
+};
 
 class NotionBlockFactory
 {
-    public function make(mixed $block)
+    public function make(mixed $block): object
     {
         return match (true) {
             $block instanceof BulletItemCollection => resolve(NotionBulletPointListTransformer::class, ['collection' => $block]),

@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Mail;
 
 class SendFreeGuidesAction
 {
-    public function execute()
+    public function execute(): int
     {
         $sendCount = 0;
 

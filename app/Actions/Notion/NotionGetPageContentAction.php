@@ -14,7 +14,7 @@ class NotionGetPageContentAction
     {
     }
 
-    public function execute(Page $page)
+    public function execute(Page $page): string
     {
         $pageBlocks = $this->getPageBlocksAction->execute($page);
         $content = '';

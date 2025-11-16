@@ -3,17 +3,17 @@
 namespace App\Actions\Blog;
 
 use App\Enums\BlogStatusEnum;
-use App\Http\Resources\BlogListResource;
 use App\Models\Blog;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Carbon;
 
 class GetByTagAction
 {
-    public function execute(int $siteId, string $tagName)
+    public function execute(int $siteId, string $tagName): LengthAwarePaginator
     {
         $itemsPerPage = config('blog.items_per_page');
 
-        $paginator = Blog::from('blogs AS b')
+        return Blog::from('blogs AS b')
             ->with('tags')
             ->select('b.*')
             ->join('blog_tags AS bt', 'bt.blog_id', '=', 'b.id')
@@ -24,16 +24,5 @@ class GetByTagAction
             ->where('t.name', $tagName)
             ->orderByDesc('published_at')
             ->paginate($itemsPerPage);
-
-        $rows = BlogListResource::collection($paginator->items());
-
-        return [
-            'data' => $rows,
-            'meta' => [
-                'current_page' => $paginator->currentPage(),
-                'last_page' => $paginator->lastPage(),
-                'total' => $paginator->total(),
-            ],
-        ];
     }
 }

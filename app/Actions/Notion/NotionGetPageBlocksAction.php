@@ -22,7 +22,7 @@ class NotionGetPageBlocksAction
         );
     }
 
-    public function execute(Page $page)
+    public function execute(Page $page): array
     {
         $pageBlocks = $this->notion
             ->block($page->getId())

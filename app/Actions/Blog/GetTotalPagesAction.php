@@ -8,7 +8,7 @@ use Illuminate\Support\Carbon;
 
 class GetTotalPagesAction
 {
-    public function execute(int $siteId)
+    public function execute(int $siteId): int
     {
         $itemsPerPage = config('blog.items_per_page');
 

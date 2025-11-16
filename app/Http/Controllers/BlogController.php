@@ -2,64 +2,74 @@
 
 namespace App\Http\Controllers;
 
-use App\Actions\Blog\GetBySlugAction;
-use App\Actions\Blog\GetByTagAction;
-use App\Actions\Blog\GetLatestAction;
-use App\Actions\Blog\GetListAction;
-use App\Actions\Blog\GetSlugListAction;
-use App\Actions\Blog\GetTotalPagesAction;
-use App\Actions\Blog\SearchAction;
-use Illuminate\Http\Request;
+use App\Actions\Blog\{
+    GetBySlugAction,
+    GetByTagAction,
+    GetLatestAction,
+    GetListAction,
+    GetSlugListAction,
+    GetTotalPagesAction,
+    SearchAction,
+};
+use App\Http\Resources\{
+    BlogListResource,
+    BlogResource,
+};
+use Illuminate\Http\{
+    JsonResponse,
+    Request,
+};
+use Illuminate\Http\Resources\Json\JsonResource;
 
 class BlogController extends Controller
 {
     /**
      * Get all blogs with a published date
      */
-    public function getList(Request $request, GetListAction $getListAction)
+    public function getList(Request $request, GetListAction $getListAction): JsonResource
     {
-        $rows = $getListAction->execute($request->siteId);
+        $blogs = $getListAction->execute($request->siteId);
 
-        return response()->json($rows);
+        return BlogListResource::collection($blogs);
     }
 
     /**
      * Get published blog that matches provided slug
      */
-    public function getBySlug(Request $request, GetBySlugAction $getBySlugAction)
+    public function getBySlug(Request $request, GetBySlugAction $getBySlugAction): JsonResource
     {
         $slug = $request->route('slug');
-        $row = $getBySlugAction->execute($request->siteId, $slug);
+        $blog = $getBySlugAction->execute($request->siteId, $slug);
 
-        return response()->json($row);
+        return resolve(BlogResource::class, ['resource' => $blog]);
     }
 
     /**
      * Get published blogs that are associated with provided tag
      */
-    public function getByTag(Request $request, GetByTagAction $getByTagAction)
+    public function getByTag(Request $request, GetByTagAction $getByTagAction): JsonResource
     {
         $tag = $request->route('tag');
-        $rows = $getByTagAction->execute($request->siteId, $tag);
+        $paginator = $getByTagAction->execute($request->siteId, $tag);
 
-        return response()->json($rows);
+        return BlogListResource::collection($paginator);
     }
 
     /**
      * Get published blog that matches provided search term
      */
-    public function search(Request $request, SearchAction $getBySearchAction)
+    public function search(Request $request, SearchAction $getBySearchAction): JsonResource
     {
         $search = $request->route('search');
-        $rows = $getBySearchAction->execute($request->siteId, $search);
+        $paginator = $getBySearchAction->execute($request->siteId, $search);
 
-        return response()->json($rows);
+        return BlogListResource::collection($paginator);
     }
 
     /**
      * Get published blog that matches provided search term
      */
-    public function getSlugs(Request $request, GetSlugListAction $getSlugListAction)
+    public function getSlugs(Request $request, GetSlugListAction $getSlugListAction): JsonResponse
     {
         $rows = $getSlugListAction->execute($request->siteId);
 
@@ -69,7 +79,7 @@ class BlogController extends Controller
     /**
      * Get total pages of published blogs
      */
-    public function getTotalPages(Request $request, GetTotalPagesAction $getTotalPagesAction)
+    public function getTotalPages(Request $request, GetTotalPagesAction $getTotalPagesAction): JsonResponse
     {
         $totalPages = $getTotalPagesAction->execute($request->siteId);
 
@@ -79,10 +89,10 @@ class BlogController extends Controller
     /**
      * Get total pages of published blogs
      */
-    public function getLatest(Request $request, GetLatestAction $getLatestAction)
+    public function getLatest(Request $request, GetLatestAction $getLatestAction): JsonResource
     {
-        $rows = $getLatestAction->execute($request->siteId);
+        $blogs = $getLatestAction->execute($request->siteId);
 
-        return response()->json($rows);
+        return BlogListResource::collection($blogs);
     }
 }

@@ -5,10 +5,14 @@ namespace App\Actions\Blog;
 use App\Enums\BlogStatusEnum;
 use App\Models\Blog;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Collection;
 
 class GetSlugListAction
 {
-    public function execute(int $siteId)
+    /**
+     * @return Collection<int, string>
+     */
+    public function execute(int $siteId): Collection
     {
         $blogs = Blog::where('site_id', $siteId)
             ->whereDate('published_at', '<=', Carbon::now())

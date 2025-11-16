@@ -26,7 +26,7 @@ class ImportBlogs extends Command
     /**
      * Execute the console command.
      */
-    public function handle()
+    public function handle(): void
     {
         $doReset = $this->argument('reset') === 'true' ? true : false;
 

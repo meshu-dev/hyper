@@ -24,7 +24,7 @@ class SendFreeGuides extends Command
     /**
      * Execute the console command.
      */
-    public function handle()
+    public function handle(): void
     {
         $result = resolve(SendFreeGuidesAction::class)->execute();
 
