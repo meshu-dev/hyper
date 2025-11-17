@@ -16,7 +16,7 @@ class NotionBlockTransformer implements NotionTransformer
         if ($this->block->getType() === 'table_of_contents') {
             return '';
         }
-        dd('Block', $this->block, $this->block->getType());
+        //dd('Block', $this->block, $this->block->getType());
         $value = $this->block->getContent()->getPlainText();
 
         return "<p>$value</p>";

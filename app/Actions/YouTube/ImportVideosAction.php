@@ -41,6 +41,9 @@ class ImportVideosAction
         }
     }
 
+    /**
+     * @return array<int, mixed>
+     */
     protected function searchYouTube(Carbon $publishedBefore): array
     {
         return $this->youTubeService

@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Closure;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Log;
 
@@ -27,6 +28,8 @@ class SignUpRequest extends FormRequest
 
     /**
      * Get the "after" validation callables for the request.
+     * 
+     * @return array<int, Closure>
      */
     public function after(): array
     {

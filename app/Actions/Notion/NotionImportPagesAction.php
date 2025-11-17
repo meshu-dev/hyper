@@ -36,23 +36,22 @@ class NotionImportPagesAction
 
         foreach ($pages as $page) {
             $blog = $this->importPage($page, $siteId);
-
             $tags = $this->importPageTagsAction->execute($page, $siteId);
 
-            if ($tags) {
+            if ($blog && $tags) {
                 $this->syncBlogTagsAction->execute($blog, $tags);
             }
         }
     }
 
-    protected function importPage(Page $page, int $siteId): Blog
+    protected function importPage(Page $page, int $siteId): Blog|null
     {
         $blog = Blog::where('notion_id', $page->getId())->first();
-        $updatedAt = Carbon::parse($page->getProperty('Updated')->getContent());
+        $updatedAt = Carbon::parse($page->getProperty('Updated')?->getContent());
 
         if (
             $blog &&
-            $blog->updated_at->lessThan($updatedAt)
+            $blog->updated_at?->lessThan($updatedAt)
         ) {
             Blog::where('notion_id', $page->getId())->update($this->getPageAction->execute($page));
         } elseif (! $blog) {
