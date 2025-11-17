@@ -9,6 +9,9 @@ use Illuminate\Support\Carbon;
 
 class GetListAction
 {
+    /**
+     * @return LengthAwarePaginator<int, Blog>
+     */
     public function execute(int $siteId): LengthAwarePaginator
     {
         $itemsPerPage = config('blog.items_per_page');

@@ -11,7 +11,7 @@ class ResetAction
 {
     public function execute(): void
     {
-        if (! App::environment('production')) {
+        if (!App::environment('production')) {
             DB::table('blog_tags')->truncate();
 
             Blog::truncate();

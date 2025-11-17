@@ -2,17 +2,19 @@
 
 namespace App\Actions\Tag;
 
-use App\Http\Resources\TagListResource;
 use App\Models\Tag;
 
 class GetListAction
 {
+    /**
+     * @return LengthAwarePaginator<int, Tag>
+     */
     public function execute(int $siteId)
     {
         $itemsPerPage = config('blog.tags_per_page');
         $rows = Tag::withCount('blogs')->where('site_id', $siteId)->get();
 
-        $rows = $rows->map(function ($item) use ($itemsPerPage) {
+        return $rows->map(function ($item) use ($itemsPerPage) {
             if ($item->blogs_count <= $itemsPerPage) {
                 $item->total_pages = 1;
             } else {
@@ -21,7 +23,5 @@ class GetListAction
 
             return $item;
         });
-
-        return TagListResource::collection($rows);
     }
 }

@@ -18,6 +18,6 @@ class GetTotalPagesAction
             ->orderByDesc('published_at')
             ->count();
 
-        return ceil($totalBlogs / $itemsPerPage);
+        return (int) ceil($totalBlogs / $itemsPerPage);
     }
 }

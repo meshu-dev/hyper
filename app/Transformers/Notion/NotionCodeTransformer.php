@@ -3,6 +3,7 @@
 namespace App\Transformers\Notion;
 
 use FiveamCode\LaravelNotionApi\Entities\Blocks\Block;
+use UnhandledMatchError;
 
 class NotionCodeTransformer
 {
@@ -31,6 +32,7 @@ class NotionCodeTransformer
             'javascript' => 'language-javascript',
             'typescript' => 'language-typescript',
             'sql' => 'language-sql',
+            default => throw new UnhandledMatchError(),
         };
     }
 }

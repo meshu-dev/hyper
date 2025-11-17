@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Blog extends Model
 {
@@ -20,7 +21,10 @@ class Blog extends Model
         'updated_at',
     ];
 
-    public function tags()
+    /**
+     * @return BelongsToMany<Tag, $this>
+     */
+    public function tags(): BelongsToMany
     {
         return $this->belongsToMany(Tag::class, 'blog_tags', 'blog_id', 'tag_id');
     }

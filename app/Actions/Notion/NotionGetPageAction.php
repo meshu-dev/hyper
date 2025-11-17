@@ -22,6 +22,9 @@ class NotionGetPageAction
         );
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function execute(Page $page): array
     {
         $pageContent = $this->getPageContentAction->execute($page);

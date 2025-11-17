@@ -2,6 +2,8 @@
 
 namespace App\Enums;
 
+use UnhandledMatchError;
+
 enum SiteEnum: int
 {
     case DEVPUSH = 1;
@@ -12,6 +14,7 @@ enum SiteEnum: int
         return match ($key) {
             'devpush' => SiteEnum::DEVPUSH,
             'devnudge' => SiteEnum::DEVNUDGE,
+            default => throw new UnhandledMatchError(),
         };
     }
 }

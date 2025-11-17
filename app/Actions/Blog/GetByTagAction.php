@@ -9,6 +9,9 @@ use Illuminate\Support\Carbon;
 
 class GetByTagAction
 {
+    /**
+     * @return LengthAwarePaginator<int, Blog>
+     */
     public function execute(int $siteId, string $tagName): LengthAwarePaginator
     {
         $itemsPerPage = config('blog.items_per_page');

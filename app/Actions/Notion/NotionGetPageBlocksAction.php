@@ -4,11 +4,13 @@ namespace App\Actions\Notion;
 
 use App\Collections\BulletItemCollection;
 use App\Collections\NumberedItemCollection;
+use FiveamCode\LaravelNotionApi\Entities\Blocks\Block;
 use FiveamCode\LaravelNotionApi\Entities\Blocks\BulletedListItem;
 use FiveamCode\LaravelNotionApi\Entities\Blocks\NumberedListItem;
 use FiveamCode\LaravelNotionApi\Entities\Page;
 use FiveamCode\LaravelNotionApi\Notion;
 use Illuminate\Support\Collection;
+use UnhandledMatchError;
 
 class NotionGetPageBlocksAction
 {
@@ -22,6 +24,9 @@ class NotionGetPageBlocksAction
         );
     }
 
+    /**
+     * @return array<int, mixed>
+     */
     public function execute(Page $page): array
     {
         $pageBlocks = $this->notion
@@ -55,7 +60,11 @@ class NotionGetPageBlocksAction
         return $pageItems;
     }
 
-    protected function groupBulletItems($pageBlocks, $index, $type): Collection
+    /**
+     * @param Collection<int, Block> $pageBlocks
+     * @return BulletItemCollection|NumberedItemCollection
+     */
+    protected function groupBulletItems(Collection $pageBlocks, int $index, string $type): BulletItemCollection|NumberedItemCollection
     {
         $group = [$pageBlocks[$index]];
         $index++;
@@ -68,6 +77,7 @@ class NotionGetPageBlocksAction
         return match ($type) {
             BulletedListItem::class => resolve(BulletItemCollection::class, ['items' => $group]),
             NumberedListItem::class => resolve(NumberedItemCollection::class, ['items' => $group]),
+            default => throw new UnhandledMatchError(),
         };
     }
 }

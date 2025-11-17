@@ -9,6 +9,9 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class SearchAction
 {
+    /**
+     * @return LengthAwarePaginator<int, Blog>
+     */
     public function execute(int $siteId, string $searchTerm): LengthAwarePaginator
     {
         $itemsPerPage = config('blog.items_per_page');
