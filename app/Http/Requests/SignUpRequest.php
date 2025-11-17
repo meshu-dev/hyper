@@ -28,7 +28,7 @@ class SignUpRequest extends FormRequest
 
     /**
      * Get the "after" validation callables for the request.
-     * 
+     *
      * @return array<int, Closure>
      */
     public function after(): array

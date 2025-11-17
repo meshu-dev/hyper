@@ -7,7 +7,7 @@ use App\Http\Controllers\TagController;
 use App\Http\Middleware\GetSiteId;
 use Illuminate\Support\Facades\Route;
 
-Route::post('auth/login', [AuthController::class, 'login']);
+Route::post('auth/login', [AuthController::class, 'login'])->name('login');
 
 Route::prefix('sites/{site}')->middleware(['auth:sanctum', GetSiteId::class])->group(function () {
     Route::prefix('blogs/')->group(function () {
