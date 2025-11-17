@@ -8,6 +8,9 @@ use Illuminate\Support\Collection;
 
 class NotionImportPageTagsAction
 {
+    /**
+     * @return Collection<int, Tag>|null
+     */
     public function execute(Page $page, int $siteId): ?Collection
     {
         $properties = $page->getRawProperties();
@@ -22,10 +25,12 @@ class NotionImportPageTagsAction
 
             return collect($tags);
         }
-
         return null;
     }
 
+    /**
+     * @param array<string, mixed> $propertyTag
+     */
     protected function addTag(array $propertyTag, int $siteId): Tag
     {
         $tag = Tag::where('site_id', $siteId)->where('notion_tag_id', $propertyTag['id'])->first();

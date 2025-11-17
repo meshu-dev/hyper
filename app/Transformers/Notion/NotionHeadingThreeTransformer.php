@@ -2,9 +2,10 @@
 
 namespace App\Transformers\Notion;
 
+use App\Contracts\NotionTransformer;
 use FiveamCode\LaravelNotionApi\Entities\Blocks\HeadingThree;
 
-class NotionHeadingThreeTransformer
+class NotionHeadingThreeTransformer implements NotionTransformer
 {
     public function __construct(protected HeadingThree $block)
     {

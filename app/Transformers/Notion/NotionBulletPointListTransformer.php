@@ -3,8 +3,9 @@
 namespace App\Transformers\Notion;
 
 use App\Collections\BulletItemCollection;
+use App\Contracts\NotionTransformer;
 
-class NotionBulletPointListTransformer
+class NotionBulletPointListTransformer implements NotionTransformer
 {
     public function __construct(protected BulletItemCollection $collection)
     {

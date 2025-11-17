@@ -3,8 +3,9 @@
 namespace App\Transformers\Notion;
 
 use App\Collections\NumberedItemCollection;
+use App\Contracts\NotionTransformer;
 
-class NotionNumberedListTransformer
+class NotionNumberedListTransformer implements NotionTransformer
 {
     public function __construct(protected NumberedItemCollection $collection)
     {

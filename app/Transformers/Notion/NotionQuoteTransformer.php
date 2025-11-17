@@ -2,9 +2,10 @@
 
 namespace App\Transformers\Notion;
 
+use App\Contracts\NotionTransformer;
 use FiveamCode\LaravelNotionApi\Entities\Blocks\Block;
 
-class NotionQuoteTransformer
+class NotionQuoteTransformer implements NotionTransformer
 {
     public function __construct(protected Block $block)
     {

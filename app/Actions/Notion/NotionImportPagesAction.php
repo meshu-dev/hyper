@@ -38,7 +38,10 @@ class NotionImportPagesAction
             $blog = $this->importPage($page, $siteId);
 
             $tags = $this->importPageTagsAction->execute($page, $siteId);
-            $this->syncBlogTagsAction->execute($blog, $tags);
+
+            if ($tags) {
+                $this->syncBlogTagsAction->execute($blog, $tags);
+            }
         }
     }
 

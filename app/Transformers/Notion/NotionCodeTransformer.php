@@ -2,10 +2,11 @@
 
 namespace App\Transformers\Notion;
 
+use App\Contracts\NotionTransformer;
 use FiveamCode\LaravelNotionApi\Entities\Blocks\Block;
 use UnhandledMatchError;
 
-class NotionCodeTransformer
+class NotionCodeTransformer implements NotionTransformer
 {
     public function __construct(protected Block $block)
     {

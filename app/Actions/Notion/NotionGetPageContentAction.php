@@ -2,6 +2,7 @@
 
 namespace App\Actions\Notion;
 
+use App\Contracts\NotionTransformer;
 use App\Factories\NotionBlockFactory;
 use FiveamCode\LaravelNotionApi\Entities\Page;
 use FiveamCode\LaravelNotionApi\Notion;
@@ -20,7 +21,9 @@ class NotionGetPageContentAction
         $content = '';
 
         foreach ($pageBlocks as $pageBlock) {
-            $content .= resolve(NotionBlockFactory::class)->make($pageBlock)->transform();
+            /** @var NotionTransformer $transformer */
+            $transformer = resolve(NotionBlockFactory::class)->make($pageBlock);
+            $content .= $transformer->transform();
         }
 
         return $content;
