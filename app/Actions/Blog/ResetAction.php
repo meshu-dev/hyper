@@ -14,8 +14,8 @@ class ResetAction
         if (!App::environment('production')) {
             DB::table('blog_tags')->truncate();
 
-            Blog::truncate();
-            Tag::truncate();
+            //Blog::truncate();
+            //Tag::truncate();
         }
     }
 }

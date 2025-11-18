@@ -14,10 +14,11 @@ class NotionCodeTransformer implements NotionTransformer
 
     public function transform(): string
     {
+        //dd($this->block, $this->block->getRawResponse());
         $language = $this->block->getRawResponse()['code']['language'];
         $code = $this->block->getRawContent()['text'][0]['plain_text'];
 
-        return "<pre><code class='".$this->getClass($language)."'>".
+        return "<pre><code class='" . $this->getClass($language) . "'>".
                     htmlspecialchars($code).
                 '</code></pre>';
     }

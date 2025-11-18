@@ -15,6 +15,6 @@ class NotionVideoTransformer implements NotionTransformer
     {
         $videoUrl = $this->block->getContent();
 
-        return "<video controls> <source src='$videoUrl' type='video/mp4' /></video>";
+        return "<video controls><source src='$videoUrl' type='video/mp4' /></video>";
     }
 }

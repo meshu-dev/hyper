@@ -23,8 +23,6 @@ class BlogSeeder extends Seeder
 
     protected function addBlogs(): void
     {
-        Blog::truncate();
-
         Blog::insert([
             [
                 'id' => BlogEnum::LARAVEL_INSTALL,
@@ -61,8 +59,6 @@ class BlogSeeder extends Seeder
 
     protected function addTags(): void
     {
-        Tag::truncate();
-
         Tag::insert([
             [
                 'id' => TagEnum::LARAVEL,
