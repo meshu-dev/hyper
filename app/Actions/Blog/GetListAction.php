@@ -12,15 +12,13 @@ class GetListAction
     /**
      * @return LengthAwarePaginator<int, Blog>
      */
-    public function execute(int $siteId): LengthAwarePaginator
+    public function execute(int $siteId, int $perPage): LengthAwarePaginator
     {
-        $itemsPerPage = config('blog.items_per_page');
-
         return Blog::with(['tags'])
             ->where('site_id', $siteId)
             ->where('status', BlogStatusEnum::DONE->value)
             ->whereDate('published_at', '<=', Carbon::now())
             ->orderByDesc('published_at')
-            ->paginate($itemsPerPage);
+            ->paginate($perPage);
     }
 }

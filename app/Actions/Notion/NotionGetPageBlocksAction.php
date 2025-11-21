@@ -40,7 +40,7 @@ class NotionGetPageBlocksAction
         for ($i = 0; $i < $pageBlocksLength; $i++) {
             $block = $pageBlocks[$i] ?? null;
 
-            if (! $block) {
+            if (!$block) {
                 break;
             }
 

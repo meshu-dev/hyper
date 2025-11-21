@@ -6,7 +6,7 @@ use FiveamCode\LaravelNotionApi\Entities\Blocks\HeadingTwo;
 describe('Transformers - H2', function () {
     it('transforms a h2 block to HTML', function () {
         // Arrange
-        $value = 'Chicken';
+        $value = getTestData('h2');
         $h2Block = HeadingTwo::create($value);
         $h2Block->setContent($value);
 

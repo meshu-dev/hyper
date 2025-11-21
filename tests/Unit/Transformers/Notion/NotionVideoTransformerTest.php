@@ -6,7 +6,7 @@ use FiveamCode\LaravelNotionApi\Entities\Blocks\Video;
 describe('Transformers - Video', function () {
     it('transforms a Video block to HTML', function () {
         // Arrange
-        $value = 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4';
+        $value = getTestData('video');
         $videoBlock = Video::create($value);
         $videoBlock->setContent($value);
 

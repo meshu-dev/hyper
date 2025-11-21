@@ -6,7 +6,7 @@ use FiveamCode\LaravelNotionApi\Entities\Blocks\HeadingThree;
 describe('Transformers - H3', function () {
     it('transforms a h3 block to HTML', function () {
         // Arrange
-        $value = 'Pork';
+        $value = getTestData('h3');
         $h3Block = HeadingThree::create($value);
         $h3Block->setContent($value);
 

@@ -1,5 +1,8 @@
 <?php
 
+// Disable deprecated checks due to use of Notion third party package
+error_reporting(E_ALL & ~E_DEPRECATED);
+
 /*
 |--------------------------------------------------------------------------
 | Test Case
@@ -40,7 +43,10 @@ expect()->extend('toBeOne', function () {
 |
 */
 
-function something()
+function getTestData($key)
 {
-    // ..
+    $filePath = __DIR__ . '/data.json';
+    $data = json_decode(file_get_contents($filePath), true);
+
+    return $data[$key] ?? null;
 }

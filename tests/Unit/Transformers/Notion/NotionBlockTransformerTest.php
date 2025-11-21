@@ -6,7 +6,7 @@ use FiveamCode\LaravelNotionApi\Entities\Blocks\ToDo;
 describe('Transformers - Block', function () {
     it('transforms a Block to HTML', function () {
         // Arrange
-        $value = 'Blah Blah';
+        $value = getTestData('block');
         $block = ToDo::create($value);
         $block->setContent($value);
 

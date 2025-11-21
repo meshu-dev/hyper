@@ -6,7 +6,7 @@ use FiveamCode\LaravelNotionApi\Entities\Blocks\Image;
 describe('Transformers - Image', function () {
     it('transforms an Image block to HTML', function () {
         // Arrange
-        $value = 'https://raw.githubusercontent.com/yavuzceliker/sample-images/refs/heads/main/docs/image-1002.jpg';
+        $value = getTestData('img');
         $imageBlock = Image::create($value);
         $imageBlock->setContent($value);
 

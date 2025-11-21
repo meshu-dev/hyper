@@ -15,8 +15,6 @@ Route::prefix('sites/{site}')->middleware(['auth:sanctum', GetSiteId::class])->g
         Route::get('/tag/{tag}', [BlogController::class, 'getByTag'])->name('blog.tag');
         Route::get('/search/{search}', [BlogController::class, 'search'])->name('blog.search');
         Route::get('/slugs', [BlogController::class, 'getSlugs'])->name('blog.slugs');
-        Route::get('/total-pages', [BlogController::class, 'getTotalPages'])->name('blog.total-pages');
-        Route::get('/latest', [BlogController::class, 'getLatest'])->name('blog.latest');;
         Route::get('/{slug}', [BlogController::class, 'getBySlug'])->name('blog.get');
     });
 

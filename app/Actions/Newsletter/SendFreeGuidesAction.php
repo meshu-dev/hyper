@@ -3,27 +3,33 @@
 namespace App\Actions\Newsletter;
 
 use App\Mail\FreeGuides;
+use App\Mail\NewsletterSubscribed;
 use App\Models\Subscriber;
 use Illuminate\Support\Facades\Mail;
 
 class SendFreeGuidesAction
 {
-    public function execute(): int
+    public function execute(int $subscriberId): void
     {
-        $sendCount = 0;
+        $subscriber = Subscriber::find($subscriberId);
 
-        $subscribers = Subscriber::where('sent', 0)->get();
+        Mail::to($subscriber->email)
+            ->send(new FreeGuides($subscriber->name));
 
-        foreach ($subscribers as $subscriber) {
-            Mail::to($subscriber->email)
-                ->send(new FreeGuides($subscriber->name));
+        $subscriber->sent = true;
+        $subscriber->save();
 
-            $subscriber->sent = true;
-            $subscriber->save();
+        $this->sendNotification($subscriber);
+    }
 
-            $sendCount++;
-        }
+    protected function sendNotification(Subscriber $subscriber)
+    {
+        $notifyEmail = config('mail.from.notify.address');
 
-        return $sendCount;
+        Mail::to($notifyEmail)
+            ->send(new NewsletterSubscribed(
+                $subscriber->name,
+                $subscriber->email
+            ));
     }
 }

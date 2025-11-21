@@ -6,7 +6,7 @@ use FiveamCode\LaravelNotionApi\Entities\Blocks\HeadingOne;
 describe('Transformers - H1', function () {
     it('transforms a h1 block to HTML', function () {
         // Arrange
-        $value = 'Beef';
+        $value = getTestData('h1');
         $h1Block = HeadingOne::create($value);
         $h1Block->setContent($value);
 

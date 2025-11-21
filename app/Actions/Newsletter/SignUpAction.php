@@ -2,9 +2,8 @@
 
 namespace App\Actions\Newsletter;
 
-use App\Mail\NewsletterSubscribed;
+use App\Jobs\SendFreeGuidesJob;
 use App\Models\Subscriber;
-use Illuminate\Support\Facades\Mail;
 
 class SignUpAction
 {
@@ -13,19 +12,13 @@ class SignUpAction
         string $email,
         string|null $ip,
     ): void {
-        Subscriber::create([
+        $subscriber = Subscriber::create([
             'name' => $name,
             'email' => $email,
             'ip' => $ip,
             'sent' => false,
         ]);
 
-        $notifyEmail = config('mail.from.notify.address');
-
-        Mail::to($notifyEmail)
-            ->send(new NewsletterSubscribed(
-                $name,
-                $email
-            ));
+        SendFreeGuidesJob::dispatch($subscriber->id);
     }
 }

@@ -6,7 +6,7 @@ use FiveamCode\LaravelNotionApi\Entities\Blocks\Embed;
 describe('Transformers - Embed', function () {
     it('transforms an Embed block to HTML', function () {
         // Arrange
-        $value = 'https://twitter.com/aarondfrancis/status/1978872519651102731';
+        $value = getTestData('embed');
         $embedBlock = Embed::create($value);
         $embedBlock->setContent($value);
 

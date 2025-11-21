@@ -6,7 +6,7 @@ use FiveamCode\LaravelNotionApi\Entities\Blocks\Quote;
 describe('Transformers - Quote', function () {
     it('transforms a Quote block to HTML', function () {
         // Arrange
-        $value = 'To be or not to be, that is the question';
+        $value = getTestData('quote');
         $h2Block = Quote::create($value);
         $h2Block->setContent($value);
 

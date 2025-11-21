@@ -5,10 +5,8 @@ namespace App\Http\Controllers;
 use App\Actions\Blog\{
     GetBySlugAction,
     GetByTagAction,
-    GetLatestAction,
     GetListAction,
     GetSlugListAction,
-    GetTotalPagesAction,
     SearchAction,
 };
 use App\Http\Resources\{
@@ -28,7 +26,8 @@ class BlogController extends Controller
      */
     public function getList(Request $request, GetListAction $getListAction): JsonResource
     {
-        $blogs = $getListAction->execute($request->siteId);
+        $perPage = $request->query('per_page', config('blog.items_per_page'));
+        $blogs = $getListAction->execute($request->siteId, $perPage);
 
         return BlogListResource::collection($blogs);
     }
@@ -72,27 +71,6 @@ class BlogController extends Controller
     public function getSlugs(Request $request, GetSlugListAction $getSlugListAction): JsonResponse
     {
         $rows = $getSlugListAction->execute($request->siteId);
-
-        return response()->json($rows);
-    }
-
-    /**
-     * Get total pages of published blogs
-     */
-    public function getTotalPages(Request $request, GetTotalPagesAction $getTotalPagesAction): JsonResponse
-    {
-        $totalPages = $getTotalPagesAction->execute($request->siteId);
-
-        return response()->json(['total_pages' => $totalPages]);
-    }
-
-    /**
-     * Get total pages of published blogs
-     */
-    public function getLatest(Request $request, GetLatestAction $getLatestAction): JsonResource
-    {
-        $blogs = $getLatestAction->execute($request->siteId);
-
-        return BlogListResource::collection($blogs);
+        return response()->json(['data' => $rows]);
     }
 }
