@@ -1,6 +1,6 @@
 <?php
 
-use App\Actions\Notion\NotionImportPagesAction;
+use App\Actions\Notion\Import\NotionImportPagesAction;
 use App\Enums\SiteEnum;
 use Mockery\MockInterface;
 

@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Actions\Notion;
+namespace App\Actions\Notion\Import;
 
 use App\Actions\Blog\SyncBlogTagsAction;
+use App\Actions\Notion\Block\NotionGetPageAction;
 use App\Models\Blog;
 use FiveamCode\LaravelNotionApi\Entities\Page;
 use FiveamCode\LaravelNotionApi\Notion;
@@ -54,7 +55,7 @@ class NotionImportPagesAction
             $blog->updated_at?->lessThan($updatedAt)
         ) {
             Blog::where('notion_id', $page->getId())->update($this->getPageAction->execute($page));
-        } elseif (! $blog) {
+        } elseif (!$blog) {
             $params = $this->getPageAction->execute($page);
             $params['site_id'] = $siteId;
 

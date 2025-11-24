@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Actions\Blog\ResetAction;
-use App\Actions\Notion\NotionImportPagesAction;
+use App\Actions\Notion\Import\NotionImportPagesAction;
 use App\Enums\SiteEnum;
 use Illuminate\Console\Command;
 

@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Actions\Notion;
+namespace App\Actions\Notion\Block;
 
+use App\Actions\Notion\Api\NotionApiGetAction;
 use App\Collections\BulletItemCollection;
 use App\Collections\NumberedItemCollection;
 use FiveamCode\LaravelNotionApi\Entities\Blocks\Block;
@@ -16,12 +17,8 @@ class NotionGetPageBlocksAction
 {
     protected Notion $notion;
 
-    public function __construct()
+    public function __construct(protected NotionApiGetAction $notionApiGetAction)
     {
-        $this->notion = resolve(
-            Notion::class,
-            ['token' => config('services.notion.api_key')]
-        );
     }
 
     /**
@@ -29,11 +26,7 @@ class NotionGetPageBlocksAction
      */
     public function execute(Page $page): array
     {
-        $pageBlocks = $this->notion
-            ->block($page->getId())
-            ->children()
-            ->asCollection();
-
+        $pageBlocks = $this->notionApiGetAction->execute($page->getId());
         $pageBlocksLength = count($pageBlocks);
         $pageItems = [];
 
@@ -69,7 +62,7 @@ class NotionGetPageBlocksAction
         $group = [$pageBlocks[$index]];
         $index++;
 
-        while ($pageBlocks[$index] instanceof $type) {
+        while (isset($pageBlocks[$index]) && $pageBlocks[$index] instanceof $type) {
             $group[] = $pageBlocks[$index];
             $index++;
         }

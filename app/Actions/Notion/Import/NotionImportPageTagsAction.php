@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Actions\Notion;
+namespace App\Actions\Notion\Import;
 
 use App\Models\Tag;
 use FiveamCode\LaravelNotionApi\Entities\Page;

@@ -1,25 +1,13 @@
 <?php
 
-namespace App\Actions\Notion;
+namespace App\Actions\Notion\Block;
 
 use FiveamCode\LaravelNotionApi\Entities\Page;
-use FiveamCode\LaravelNotionApi\Notion;
 
 class NotionGetPageAction
 {
-    protected Notion $notion;
-
-    protected NotionGetPageContentAction $getPageContentAction;
-
-    public function __construct()
+    public function __construct(protected NotionGetPageContentAction $getPageContentAction)
     {
-        $this->notion = resolve(
-            Notion::class,
-            ['token' => config('services.notion.api_key')]
-        );
-        $this->getPageContentAction = resolve(
-            NotionGetPageContentAction::class
-        );
     }
 
     /**

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Actions\Notion;
+namespace App\Actions\Notion\Block;
 
 use App\Contracts\NotionTransformer;
 use App\Factories\NotionBlockFactory;
