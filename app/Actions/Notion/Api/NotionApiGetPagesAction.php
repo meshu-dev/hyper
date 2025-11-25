@@ -4,16 +4,16 @@ namespace App\Actions\Notion\Api;
 
 use Illuminate\Support\Collection;
 
-class NotionApiGetAction extends NotionBaseApiAction
+class NotionApiGetPagesAction extends NotionBaseApiAction
 {
     /**
      * @return Collection<int, mixed>
      */
-    public function execute(string $pageId): Collection
-    {
+    public function execute(string $databaseId): Collection
+    {   
         return $this->notion
-            ->block($pageId)
-            ->children()
+            ->database($databaseId)
+            ->query()
             ->asCollection();
     }
 }

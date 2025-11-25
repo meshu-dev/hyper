@@ -7,5 +7,6 @@
     "video": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
     "embed": "https://twitter.com/aarondfrancis/status/1978872519651102731",
     "quote": "To be or not to be, that is the question",
-    "block": "Blah Blah"
+    "block": "Blah Blah",
+    "page": "<h1>Fast food places</h1><ul><li>McDonalds</li><li>Burger King</li><li>Five Guys</li></ul>"
 }

@@ -34,7 +34,7 @@ describe('Actions - NotionGetPageContentAction', function () {
                 ->andReturn($pageData['title']);
         });
 
-        $pageContent = '<h1>Fast food places</h1><ul><li>McDonalds</li><li>Burger King</li><li>Five Guys</li></ul>';
+        $pageContent = getTestData('page');
 
         $getPageContentAction = mock(NotionGetPageContentAction::class, function (MockInterface $mock) use ($page, $pageContent) {
             $mock->shouldReceive('execute')
