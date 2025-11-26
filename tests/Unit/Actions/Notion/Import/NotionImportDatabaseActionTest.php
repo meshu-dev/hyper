@@ -25,8 +25,8 @@ describe('Actions - NotionImportDatabaseAction', function () {
 
         $pages = collect([$page]);
 
-        $databaseId = 12345;
-        $siteId = SiteEnum::DEVNUDGE->value;
+        $databaseId = Str::uuid()->toString();
+        $siteId     = SiteEnum::DEVNUDGE->value;
 
         // Assert
         $notionApiGetPagesAction = mock(NotionApiGetPagesAction::class, function (MockInterface $mock) use ($databaseId, $pages) {
