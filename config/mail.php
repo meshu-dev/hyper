@@ -113,9 +113,5 @@ return [
     'from' => [
         'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
         'name' => env('MAIL_FROM_NAME', 'Example'),
-        'notify' => [
-            'address' => env('MAIL_FROM_NOTIFY_ADDRESS', 'hello@example.com'),
-        ],
     ],
-
 ];

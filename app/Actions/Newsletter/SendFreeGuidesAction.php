@@ -2,10 +2,12 @@
 
 namespace App\Actions\Newsletter;
 
+use App\Enums\UserEnum;
 use App\Mail\FreeGuides;
-use App\Mail\NewsletterSubscribed;
-use App\Models\Subscriber;
+use App\Models\{Subscriber, User};
+use App\Notifications\GuidesSent;
 use Illuminate\Support\Facades\Mail;
+
 
 class SendFreeGuidesAction
 {
@@ -24,12 +26,11 @@ class SendFreeGuidesAction
 
     protected function sendNotification(Subscriber $subscriber)
     {
-        $notifyEmail = config('mail.from.notify.address');
-
-        Mail::to($notifyEmail)
-            ->send(new NewsletterSubscribed(
-                $subscriber->name,
-                $subscriber->email
-            ));
+        User::find(UserEnum::ADMIN)->notify(
+            resolve(
+                GuidesSent::class,
+                ['subscriber' => $subscriber]
+            )
+        );
     }
 }
