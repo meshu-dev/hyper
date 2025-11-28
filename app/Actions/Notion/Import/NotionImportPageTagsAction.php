@@ -15,9 +15,6 @@ class NotionImportPageTagsAction
     ) {
     }
 
-    /**
-     * @return Collection<int, Tag>|null
-     */
     public function execute(Page $page, int $siteId): void
     {
         $blog = Blog::where('notion_id', $page->getId())->first();
@@ -28,6 +25,9 @@ class NotionImportPageTagsAction
         }
     }
 
+    /**
+     * @return Collection<int, Tag>|null
+     */
     protected function addTags(Page $page, int $siteId): ?Collection
     {
         $properties = $page->getRawProperties();

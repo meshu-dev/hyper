@@ -12,7 +12,7 @@ class SendFreeGuidesAction
 {
     public function execute(int $subscriberId): void
     {
-        $subscriber = Subscriber::find($subscriberId);
+        $subscriber = Subscriber::findOrFail($subscriberId);
 
         Mail::to($subscriber->email)
             ->send(new FreeGuides($subscriber->name));
@@ -23,9 +23,9 @@ class SendFreeGuidesAction
         $this->sendNotification($subscriber);
     }
 
-    protected function sendNotification(Subscriber $subscriber)
+    protected function sendNotification(Subscriber $subscriber): void
     {
-        User::find(UserEnum::ADMIN)->notify(
+        User::findOrFail(UserEnum::ADMIN)->notify(
             resolve(
                 GuidesSent::class,
                 ['subscriber' => $subscriber]

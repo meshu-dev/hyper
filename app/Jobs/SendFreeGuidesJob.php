@@ -21,7 +21,7 @@ class SendFreeGuidesJob implements ShouldQueue
     /**
      * Create a new job instance.
      *
-     * @param array<string, mixed> $params
+     * @param int $subscriberId
      */
     public function __construct(
         public int $subscriberId
