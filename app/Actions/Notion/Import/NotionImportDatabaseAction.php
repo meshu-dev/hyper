@@ -10,8 +10,7 @@ class NotionImportDatabaseAction
         protected NotionApiGetPagesAction $notionApiGetPagesAction,
         protected NotionImportPageAction $notionImportPageAction,
         protected NotionImportPageTagsAction $notionImportPageTagsAction
-    )
-    {
+    ) {
     }
 
     public function execute(string $databaseId, int $siteId): void

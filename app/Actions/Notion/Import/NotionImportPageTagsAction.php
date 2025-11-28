@@ -12,8 +12,7 @@ class NotionImportPageTagsAction
 {
     public function __construct(
         protected SyncBlogTagsAction $syncBlogTagsAction
-    )
-    {
+    ) {
     }
 
     /**
@@ -23,7 +22,7 @@ class NotionImportPageTagsAction
     {
         $blog = Blog::where('notion_id', $page->getId())->first();
         $tags = $this->addTags($page, $siteId);
-        
+
         if ($blog && $tags) {
             $this->syncBlogTagsAction->execute($blog, $tags);
         }

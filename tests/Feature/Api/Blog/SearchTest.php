@@ -2,7 +2,6 @@
 
 use App\Models\User;
 use Laravel\Sanctum\Sanctum;
-use Tests\Enums\TagEnum;
 use Tests\Enums\UserEnum;
 
 describe('API - Blog', function () {

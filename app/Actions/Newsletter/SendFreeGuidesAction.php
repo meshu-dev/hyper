@@ -8,7 +8,6 @@ use App\Models\{Subscriber, User};
 use App\Notifications\GuidesSent;
 use Illuminate\Support\Facades\Mail;
 
-
 class SendFreeGuidesAction
 {
     public function execute(int $subscriberId): void

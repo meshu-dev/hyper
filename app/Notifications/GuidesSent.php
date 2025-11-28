@@ -16,8 +16,7 @@ class GuidesSent extends Notification
      */
     public function __construct(
         protected Subscriber $subscriber,
-    )
-    {
+    ) {
     }
 
     public function via(object $notifiable): array
@@ -27,7 +26,7 @@ class GuidesSent extends Notification
 
     public function toMail(object $notifiable): MailMessage
     {
-        return (new MailMessage)->view(
+        return (new MailMessage())->view(
             'mail.subscribed',
             [
                 'name'  => $this->subscriber->name,

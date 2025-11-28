@@ -18,7 +18,7 @@ class NotionBlockTransformer implements NotionTransformer
         }
         //dd('Block', $this->block, $this->block->getType());
         //dd($this->block);
-        
+
         $value = $this->block->getContent()->getPlainText();
 
         return "<p>$value</p>";

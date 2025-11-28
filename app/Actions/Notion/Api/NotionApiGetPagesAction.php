@@ -10,7 +10,7 @@ class NotionApiGetPagesAction extends NotionBaseApiAction
      * @return Collection<int, mixed>
      */
     public function execute(string $databaseId): Collection
-    {   
+    {
         return $this->notion
             ->database($databaseId)
             ->query()

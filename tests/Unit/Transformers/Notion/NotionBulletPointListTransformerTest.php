@@ -20,7 +20,7 @@ describe('Transformers - Bullet Point list', function () {
             $bulletPointCollection->push($block);
         }
 
-        $values = array_map(fn ($value): string => '<li>' . $value . '</li>',  $values);
+        $values = array_map(fn ($value): string => '<li>' . $value . '</li>', $values);
 
         // Act
         $result = resolve(

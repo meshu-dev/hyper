@@ -11,8 +11,7 @@ class NotionImportPageAction
 {
     public function __construct(
         protected NotionGetPageAction $getPageAction
-    )
-    {
+    ) {
     }
 
     public function execute(Page $page, int $siteId): void

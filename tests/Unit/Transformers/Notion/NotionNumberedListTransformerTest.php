@@ -20,7 +20,7 @@ describe('Transformers - Numbered list', function () {
             $numberedListCollection->push($block);
         }
 
-        $values = array_map(fn ($value): string => '<li>' . $value . '</li>',  $values);
+        $values = array_map(fn ($value): string => '<li>' . $value . '</li>', $values);
 
         // Act
         $result = resolve(
