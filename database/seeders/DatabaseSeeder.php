@@ -13,11 +13,11 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             SiteSeeder::class,
             FreeGuideSeeder::class,
-            SubscriberSeeder::class,
-            BlogSeeder::class,
         ];
 
         if (App::environment('local')) {
+            $seeders[] = SubscriberSeeder::class;
+            $seeders[] = BlogSeeder::class;
             $seeders[] = SubscriberSeeder::class;
         }
 
