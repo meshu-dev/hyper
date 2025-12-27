@@ -3,16 +3,22 @@
 namespace App\Actions\Tag;
 
 use App\Models\Tag;
-use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 
 class GetListAction
 {
     /**
-     * @return LengthAwarePaginator<int, Tag>
+     * @return Collection
      */
-    public function execute(int $siteId): LengthAwarePaginator
+    public function execute(int $siteId): Collection
     {
         $itemsPerPage = config('blog.tags_per_page');
-        return Tag::withCount('blogs')->where('site_id', $siteId)->paginate($itemsPerPage);
+        $tags = Tag::withCount('blogs')->where('site_id', $siteId)->get();
+
+        $tags->each(function (Tag $item, int $key) use ($itemsPerPage) {
+            $item->total_pages = ceil($item->blogs_count / $itemsPerPage);
+        });
+
+        return $tags;
     }
 }
