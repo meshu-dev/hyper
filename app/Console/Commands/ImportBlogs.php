@@ -2,7 +2,6 @@
 
 namespace App\Console\Commands;
 
-use App\Actions\Blog\ResetAction;
 use App\Actions\Notion\Import\NotionImportDatabaseAction;
 use App\Enums\SiteEnum;
 use Illuminate\Console\Command;
@@ -14,7 +13,7 @@ class ImportBlogs extends Command
      *
      * @var string
      */
-    protected $signature = 'app:import-blogs {reset=false}';
+    protected $signature = 'app:import-blogs {site}';
 
     /**
      * The console command description.
@@ -28,15 +27,11 @@ class ImportBlogs extends Command
      */
     public function handle(): void
     {
-        $doReset = $this->argument('reset') === 'true' ? true : false;
+        $siteKey = $this->argument('site');
 
-        if ($doReset) {
-            resolve(ResetAction::class)->execute();
-        }
+        $databaseId = config("services.notion.$siteKey.database_id");
+        $site       = SiteEnum::fromKey($siteKey);
 
-        $databaseId = config('services.notion.devnudge.database_id');
-        $siteId = SiteEnum::DEVNUDGE->value;
-
-        resolve(NotionImportDatabaseAction::class)->execute($databaseId, $siteId);
+        resolve(NotionImportDatabaseAction::class)->execute($databaseId, $site);
     }
 }

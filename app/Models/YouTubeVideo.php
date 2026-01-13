@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class YouTubeVideo extends Model
 {
@@ -14,4 +15,12 @@ class YouTubeVideo extends Model
         'thumbnail_url',
         'published_at',
     ];
+
+    /**
+     * @return BelongsTo<Blog, $this>
+     */
+    public function blog(): BelongsTo
+    {
+        return $this->belongsTo(Blog::class);
+    }
 }

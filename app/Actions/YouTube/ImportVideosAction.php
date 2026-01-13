@@ -68,7 +68,7 @@ class ImportVideosAction
         if ($videoId) {
             $video = YouTubeVideo::where(['youtube_id' => $videoId])->first();
 
-            if (! $video) {
+            if (!$video) {
                 YouTubeVideo::create([
                     'youtube_id' => $videoId,
                     'title' => $searchSnippet->getTitle(),

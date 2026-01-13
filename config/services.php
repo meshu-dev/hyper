@@ -37,6 +37,9 @@ return [
     ],
     'notion' => [
         'api_key' => env('NOTION_API_TOKEN'),
+        'devpush' => [
+            'database_id' => env('NOTION_DATABASE_DEVPUSH'),
+        ],
         'devnudge' => [
             'database_id' => env('NOTION_DATABASE_DEVNUDGE'),
         ],

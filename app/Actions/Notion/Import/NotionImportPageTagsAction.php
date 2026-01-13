@@ -3,6 +3,7 @@
 namespace App\Actions\Notion\Import;
 
 use App\Actions\Blog\SyncBlogTagsAction;
+use App\Enums\SiteEnum;
 use App\Models\Blog;
 use App\Models\Tag;
 use FiveamCode\LaravelNotionApi\Entities\Page;
@@ -15,10 +16,10 @@ class NotionImportPageTagsAction
     ) {
     }
 
-    public function execute(Page $page, int $siteId): void
+    public function execute(Page $page, SiteEnum $site): void
     {
         $blog = Blog::where('notion_id', $page->getId())->first();
-        $tags = $this->addTags($page, $siteId);
+        $tags = $this->addTags($page, $site);
 
         if ($blog && $tags) {
             $this->syncBlogTagsAction->execute($blog, $tags);
@@ -28,7 +29,7 @@ class NotionImportPageTagsAction
     /**
      * @return Collection<int, Tag>|null
      */
-    protected function addTags(Page $page, int $siteId): ?Collection
+    protected function addTags(Page $page, SiteEnum $site): ?Collection
     {
         $properties = $page->getRawProperties();
         $tags = [];
@@ -37,7 +38,7 @@ class NotionImportPageTagsAction
             $propertyTags = $properties['Tags']['multi_select'];
 
             foreach ($propertyTags as $propertyTag) {
-                $tags[] = $this->addTag($propertyTag, $siteId);
+                $tags[] = $this->addTag($propertyTag, $site);
             }
 
             return collect($tags);
@@ -48,13 +49,13 @@ class NotionImportPageTagsAction
     /**
      * @param array<string, mixed> $propertyTag
      */
-    protected function addTag(array $propertyTag, int $siteId): Tag
+    protected function addTag(array $propertyTag, SiteEnum $site): Tag
     {
-        $tag = Tag::where('site_id', $siteId)->where('notion_tag_id', $propertyTag['id'])->first();
+        $tag = Tag::where('site_id', $site->value)->where('notion_tag_id', $propertyTag['id'])->first();
 
         if (! $tag) {
             $tag = Tag::create([
-                'site_id' => $siteId,
+                'site_id' => $site->value,
                 'notion_tag_id' => $propertyTag['id'],
                 'name' => $propertyTag['name'],
                 'color' => $propertyTag['color'],

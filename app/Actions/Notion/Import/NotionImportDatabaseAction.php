@@ -3,6 +3,7 @@
 namespace App\Actions\Notion\Import;
 
 use App\Actions\Notion\Api\NotionApiGetPagesAction;
+use App\Enums\SiteEnum;
 
 class NotionImportDatabaseAction
 {
@@ -13,13 +14,13 @@ class NotionImportDatabaseAction
     ) {
     }
 
-    public function execute(string $databaseId, int $siteId): void
+    public function execute(string $databaseId, SiteEnum $site): void
     {
         $pages = $this->notionApiGetPagesAction->execute($databaseId);
 
         foreach ($pages as $page) {
-            $this->notionImportPageAction->execute($page, $siteId);
-            $this->notionImportPageTagsAction->execute($page, $siteId);
+            $this->notionImportPageAction->execute($page, $site);
+            $this->notionImportPageTagsAction->execute($page, $site);
         }
     }
 }
