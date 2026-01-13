@@ -3,7 +3,7 @@
 namespace App\Actions\YouTube;
 
 use App\Models\Blog;
-use App\Models\YouTubeVideo;
+use App\Models\Video;
 use FiveamCode\LaravelNotionApi\Entities\Page;
 
 class LinkBlogToVideoAction
@@ -13,7 +13,7 @@ class LinkBlogToVideoAction
         $youTubeId = $page->getProperty('YouTube ID')?->getContent()->getPlainText();
 
         if ($youTubeId) {
-            $video = YouTubeVideo::where('youtube_id', $youTubeId)->first();
+            $video = Video::where('youtube_id', $youTubeId)->first();
 
             if ($video && !$video->blog) {
                 $video->blog()->attach($blog);

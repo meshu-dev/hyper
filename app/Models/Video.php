@@ -5,9 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class YouTubeVideo extends Model
+class Video extends Model
 {
-    protected $table = 'youtube_videos';
+    protected $table = 'videos';
 
     protected $fillable = [
         'youtube_id',

@@ -2,7 +2,7 @@
 
 namespace App\Actions\YouTube;
 
-use App\Models\YouTubeVideo;
+use App\Models\Video;
 use Google\Client;
 use Google\Service\YouTube;
 use Google\Service\YouTube\SearchResult;
@@ -66,10 +66,10 @@ class ImportVideosAction
         $thumbnailUrl = $searchSnippet->getThumbnails()->getMedium();
 
         if ($videoId) {
-            $video = YouTubeVideo::where(['youtube_id' => $videoId])->first();
+            $video = Video::where(['youtube_id' => $videoId])->first();
 
             if (!$video) {
-                YouTubeVideo::create([
+                Video::create([
                     'youtube_id' => $videoId,
                     'title' => $searchSnippet->getTitle(),
                     'thumbnail_url' => $thumbnailUrl->getUrl(),

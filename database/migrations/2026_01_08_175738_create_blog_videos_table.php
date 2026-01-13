@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
         });
+        Schema::rename('youtube_videos', 'videos');
     }
 
     /**
@@ -23,5 +24,6 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('blog_videos');
+        Schema::rename('videos', 'youtube_videos');
     }
 };
