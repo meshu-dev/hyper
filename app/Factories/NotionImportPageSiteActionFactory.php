@@ -7,9 +7,9 @@ use App\Enums\SiteEnum;
 
 class NotionImportPageSiteActionFactory
 {
-    public function make(SiteEnum $site): object
+    public function make(SiteEnum $site): object|null
     {
-        return match ($site::class) {
+        return match ($site) {
             SiteEnum::DEVPUSH => resolve(LinkBlogToVideoAction::class),
             default           => null,
         };

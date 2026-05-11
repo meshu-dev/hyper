@@ -1,7 +1,7 @@
 <?php
 
 // Disable deprecated checks due to use of Notion third party package
-error_reporting(E_ALL & ~E_DEPRECATED);
+//error_reporting(E_ALL ^ E_DEPRECATED);
 
 /*
 |--------------------------------------------------------------------------
