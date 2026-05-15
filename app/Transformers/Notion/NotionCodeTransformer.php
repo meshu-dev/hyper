@@ -2,9 +2,9 @@
 
 namespace App\Transformers\Notion;
 
+use App\Actions\Code\CodeToHtmlAction;
 use App\Contracts\NotionTransformer;
 use FiveamCode\LaravelNotionApi\Entities\Blocks\Block;
-use UnhandledMatchError;
 
 class NotionCodeTransformer implements NotionTransformer
 {
@@ -14,27 +14,11 @@ class NotionCodeTransformer implements NotionTransformer
 
     public function transform(): string
     {
-        //dd($this->block, $this->block->getRawResponse());
         $language = $this->block->getRawResponse()['code']['language'];
-        $code = $this->block->getRawContent()['text'][0]['plain_text'];
+        $code     = $this->block->getRawContent()['text'][0]['plain_text'];
 
-        return "<pre><code class='" . $this->getClass($language) . "'>".
-                    htmlspecialchars($code).
-                '</code></pre>';
-    }
+        $codeHtml = resolve(CodeToHtmlAction::class)->execute($language, $code);
 
-    protected function getClass(string $language): string
-    {
-        return match ($language) {
-            'plain text' => 'language-plaintext',
-            'bash' => 'language-bash',
-            'html' => 'language-html',
-            'css' => 'language-css',
-            'php' => 'language-php',
-            'javascript' => 'language-javascript',
-            'typescript' => 'language-typescript',
-            'sql' => 'language-sql',
-            default => throw new UnhandledMatchError(),
-        };
+        return view('code-block', ['codeBlock'  => $codeHtml])->render();
     }
 }

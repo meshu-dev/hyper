@@ -21,6 +21,8 @@ class NotionImportDatabaseAction
         foreach ($pages as $page) {
             $this->notionImportPageAction->execute($page, $site);
             $this->notionImportPageTagsAction->execute($page, $site);
+
+            dump('PAGE!', $page->getUrl());
         }
     }
 }

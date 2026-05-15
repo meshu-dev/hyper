@@ -3,6 +3,7 @@
 namespace App\Actions\Notion\Block;
 
 use FiveamCode\LaravelNotionApi\Entities\Page;
+use Illuminate\Support\Carbon;
 
 class NotionGetPageAction
 {
@@ -22,13 +23,13 @@ class NotionGetPageAction
 
         return [
             'notion_id' => $page->getId(),
-            'title' => $page->getTitle(),
-            'slug' => $slug,
-            'content' => $pageContent,
-            'status' => $properties['Status']['status']['name'],
+            'title'        => $page->getTitle(),
+            'slug'         => $slug,
+            'content'      => $pageContent,
+            'status'       => $properties['Status']['status']['name'],
             'published_at' => $properties['Published']['date']['start'] ?? null,
-            'created_at' => $properties['Created']['created_time'],
-            'updated_at' => $properties['Updated']['last_edited_time'],
+            'created_at'   => Carbon::parse($properties['Created']['created_time']),
+            'updated_at'   => Carbon::parse($properties['Updated']['last_edited_time']),
         ];
     }
 }
