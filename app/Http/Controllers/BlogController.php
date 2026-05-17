@@ -7,6 +7,7 @@ use App\Actions\Blog\{
     GetByTagAction,
     GetListAction,
     GetSlugListAction,
+    GetTotalBlogPagesAction,
     SearchAction,
 };
 use App\Http\Resources\{
@@ -68,9 +69,18 @@ class BlogController extends Controller
     /**
      * Get published blog that matches provided search term
      */
-    public function getSlugs(Request $request, GetSlugListAction $getSlugListAction): JsonResponse
+    public function slugs(Request $request, GetSlugListAction $getSlugListAction): JsonResponse
     {
         $rows = $getSlugListAction->execute($request->siteId);
         return response()->json(['data' => $rows]);
+    }
+
+    /**
+     * Get published blog that matches provided search term
+     */
+    public function totalPages(Request $request, GetTotalBlogPagesAction $getTotalBlogPagesAction): JsonResponse
+    {
+        $pages = $getTotalBlogPagesAction->execute($request->siteId);
+        return response()->json(['data' => ['pages' => $pages]]);
     }
 }
