@@ -27,8 +27,7 @@ class BlogController extends Controller
      */
     public function getList(Request $request, GetListAction $getListAction): JsonResource
     {
-        $perPage = $request->query('per_page', config('blog.items_per_page'));
-        $blogs = $getListAction->execute($request->siteId, $perPage);
+        $blogs = $getListAction->execute($request->siteId);
 
         return BlogListResource::collection($blogs);
     }
