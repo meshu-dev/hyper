@@ -44,4 +44,9 @@ return [
             'database_id' => env('NOTION_DATABASE_DEVNUDGE'),
         ],
     ],
+    'vercel' => [
+        'devnudge' => [
+            'deploy_hook' => env('VERCEL_DEVNUDGE_DEPLOY_HOOK'),
+        ],
+    ],
 ];
