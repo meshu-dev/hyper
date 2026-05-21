@@ -10,4 +10,4 @@ Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->purpose('Display an inspiring quote');
  
-//Schedule::job(resolve(ImportBlogsJob::class, ['site' => SiteEnum::DEVNUDGE]))->dailyAt('12:00');
+Schedule::job(resolve(ImportBlogsJob::class, ['site' => SiteEnum::DEVNUDGE]))->dailyAt('12:00');
