@@ -2,7 +2,6 @@
 
 namespace App\Jobs;
 
-use App\Actions\Newsletter\SendFreeGuidesAction;
 use App\Actions\Notion\Import\NotionImportDatabaseAction;
 use App\Actions\Vercel\DeployWebhookAction;
 use App\Enums\SiteEnum;
@@ -11,6 +10,8 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Log;
+use Throwable;
 
 class ImportBlogsJob implements ShouldQueue
 {
@@ -34,10 +35,16 @@ class ImportBlogsJob implements ShouldQueue
      */
     public function handle(): void
     {
-        $databaseId = config("services.notion.{$this->site->key}.database_id");
+        try {
+            $siteKey    = $this->site->key;
+            $databaseId = config("services.notion.$siteKey.database_id");
 
-        resolve(NotionImportDatabaseAction::class)->execute($databaseId, $this->site);
+            resolve(NotionImportDatabaseAction::class)->execute($databaseId, $this->site);
+            resolve(DeployWebhookAction::class)->execute($this->site);
 
-        resolve(DeployWebhookAction::class)->execute($this->site);
+            Log::info("Imported blogs: $siteKey");
+        } catch (Throwable $e) {
+            Log::error("Importing blogs failed: $siteKey | Error: " . $e->getMessage());
+        }
     }
 }
