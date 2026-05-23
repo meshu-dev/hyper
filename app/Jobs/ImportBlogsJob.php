@@ -35,7 +35,7 @@ class ImportBlogsJob implements ShouldQueue
      */
     public function handle(): void
     {
-        $siteKey = $this->site->key;
+        $siteKey = $this->site->key();
 
         try {
             $databaseId = config("services.notion.$siteKey.database_id");
